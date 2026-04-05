@@ -33,7 +33,6 @@
     font-family: 'Noto Serif TC', serif;
   }
 
-  /* === SCROLL FADE IN === */
   .fade-in {
     opacity: 0;
     transform: translateY(30px);
@@ -44,7 +43,6 @@
     transform: translateY(0);
   }
 
-  /* === CTA BUTTON === */
   .cta-btn {
     background: linear-gradient(135deg, var(--accent), var(--espresso));
     color: white;
@@ -89,7 +87,6 @@
     box-shadow: 0 10px 30px rgba(139,107,74,0.3);
   }
 
-  /* === CARD HOVER === */
   .hover-card {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
@@ -98,7 +95,6 @@
     box-shadow: 0 20px 50px rgba(100,70,40,0.15);
   }
 
-  /* === HERO === */
   #hero {
     background: linear-gradient(160deg, var(--white) 0%, var(--latte) 60%, var(--cream) 100%);
     min-height: 100vh;
@@ -117,13 +113,11 @@
     pointer-events: none;
   }
 
-  /* === COUNTER ANIMATION === */
   .counter-val {
     font-family: 'Noto Serif TC', serif;
     font-weight: 700;
   }
 
-  /* === STEP CONNECTOR === */
   .step-line {
     position: absolute;
     top: 28px;
@@ -133,7 +127,6 @@
     background: linear-gradient(90deg, var(--mocha), var(--latte));
   }
 
-  /* === FAQ ACCORDION === */
   .faq-item summary {
     list-style: none;
     cursor: pointer;
@@ -142,7 +135,6 @@
   .faq-item[open] summary .faq-icon { transform: rotate(45deg); }
   .faq-icon { transition: transform 0.3s ease; }
 
-  /* === FORM === */
   .form-input {
     width: 100%;
     padding: 14px 18px;
@@ -162,14 +154,12 @@
   .form-input.error { border-color: #E07070; }
   .form-input.success { border-color: #7DB87D; }
 
-  /* === TRUST BADGE === */
   .trust-badge {
     background: rgba(255,255,255,0.7);
     backdrop-filter: blur(8px);
     border: 1px solid var(--latte);
   }
 
-  /* === SCARCITY PULSE === */
   @keyframes pulse-dot {
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.5; transform: scale(1.4); }
@@ -182,7 +172,6 @@
     display: inline-block;
   }
 
-  /* === SUCCESS ANIMATION === */
   @keyframes successPop {
     0% { opacity: 0; transform: scale(0.8) translateY(10px); }
     60% { transform: scale(1.05) translateY(-5px); }
@@ -190,7 +179,6 @@
   }
   .success-pop { animation: successPop 0.5s ease forwards; }
 
-  /* === HIDDEN PAGE === */
   #hiddenPage {
     display: none;
     position: fixed;
@@ -223,14 +211,12 @@
   .badge-new { background: #2d5a2d; color: #a8e6a8; }
   .badge-pro { background: #4a3a1a; color: #f5d070; }
 
-  /* === SECTION DIVIDER === */
   .wave-divider {
     width: 100%;
     overflow: hidden;
     line-height: 0;
   }
 
-  /* === STATS ROW === */
   .stat-card {
     background: var(--white);
     border: 1px solid var(--latte);
@@ -240,7 +226,6 @@
     box-shadow: 0 4px 20px rgba(139,107,74,0.08);
   }
 
-  /* === TESTIMONIAL === */
   .testimonial-card {
     background: var(--white);
     border-left: 4px solid var(--mocha);
@@ -260,7 +245,6 @@
     line-height: 1;
   }
 
-  /* === FLOATING NAV === */
   #floatingNav {
     position: fixed;
     bottom: 24px;
@@ -269,7 +253,6 @@
     transition: opacity 0.3s;
   }
 
-  /* Responsive tweaks */
   @media (max-width: 640px) {
     .cta-btn, .cta-btn-outline { width: 100%; display: block; }
     #floatingNav { bottom: 16px; right: 16px; }
@@ -287,8 +270,6 @@
 
 <!-- ==================== 1. HERO ==================== -->
 <section id="hero" class="px-5 pt-16 pb-20 flex flex-col items-center text-center">
-  
-  <!-- Logo / Brand -->
   <div class="mb-10 fade-in">
     <p class="text-xs tracking-widest uppercase text-warm-gray mb-1" style="color:var(--warm-gray);">官方認證居家接案平台</p>
     <div class="flex items-center justify-center gap-2">
@@ -297,13 +278,11 @@
     </div>
   </div>
 
-  <!-- Scarcity bar -->
   <div class="trust-badge rounded-full px-4 py-2 mb-8 flex items-center gap-2 fade-in" style="transition-delay:0.1s;">
     <span class="pulse-dot"></span>
     <span style="font-size:0.8rem;color:var(--espresso);">本週僅剩 <strong>12</strong> 個名額開放申請</span>
   </div>
 
-  <!-- Main headline -->
   <h1 class="fade-in" style="font-size:clamp(1.8rem,6vw,3rem);font-weight:700;line-height:1.3;color:var(--dark-brown);max-width:600px;transition-delay:0.15s;">
     在家也能穩定接案<br>
     <span style="color:var(--accent);">每天多一份收入</span>
@@ -313,14 +292,12 @@
     簡單手工包裝，新手也能快速上手<br>不需經驗・不需設備・在家完成
   </p>
 
-  <!-- Trust points -->
   <div class="flex flex-wrap justify-center gap-4 mb-10 fade-in" style="transition-delay:0.35s;">
     <span class="trust-badge rounded-full px-4 py-2 text-sm font-medium" style="color:var(--espresso);">✔ 免押金</span>
     <span class="trust-badge rounded-full px-4 py-2 text-sm font-medium" style="color:var(--espresso);">✔ 彈性接案</span>
     <span class="trust-badge rounded-full px-4 py-2 text-sm font-medium" style="color:var(--espresso);">✔ 無經驗可</span>
   </div>
 
-  <!-- CTA -->
   <div class="fade-in" style="transition-delay:0.45s;">
     <a href="#form" class="cta-btn" style="font-size:1.1rem;padding:18px 44px;">
       👉 立即免費申請名額
@@ -328,10 +305,8 @@
     <p class="mt-3" style="font-size:0.78rem;color:var(--warm-gray);">⚠ 名額有限，申請越早安排越快</p>
   </div>
 
-  <!-- Hero illustration (CSS art) -->
   <div class="mt-14 fade-in w-full max-w-sm" style="transition-delay:0.55s;">
     <div style="background:var(--white);border-radius:24px;padding:28px;box-shadow:0 16px 60px rgba(139,107,74,0.15);position:relative;">
-      <!-- Desk scene -->
       <div style="background:var(--latte);border-radius:12px;padding:20px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;">
         <div style="background:#F5E6D0;width:80px;height:100px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 12px rgba(0,0,0,0.08);">🕯️<div style="font-size:0.6rem;color:var(--espresso);margin-top:4px;">香氛蠟燭</div></div>
         <div style="background:#EDE0D0;width:80px;height:100px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 12px rgba(0,0,0,0.08);">📦<div style="font-size:0.6rem;color:var(--espresso);margin-top:4px;">精品包裝</div></div>
@@ -437,28 +412,24 @@
     <h2 class="text-center text-2xl font-bold mb-12 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">4步驟快速開始</h2>
 
     <div class="grid grid-cols-2 gap-6 sm:grid-cols-4 fade-in" style="transition-delay:0.2s;">
-      <!-- Step 1 -->
       <div class="text-center">
         <div style="width:56px;height:56px;background:var(--espresso);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.4rem;box-shadow:0 8px 20px rgba(139,107,74,0.3);">📝</div>
         <div style="font-size:0.7rem;color:var(--espresso);font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">STEP 1</div>
         <div style="font-size:0.9rem;font-weight:600;color:var(--dark-brown);">填寫資料</div>
         <div style="font-size:0.78rem;color:var(--warm-gray);margin-top:4px;">姓名＋聯絡方式</div>
       </div>
-      <!-- Step 2 -->
       <div class="text-center">
         <div style="width:56px;height:56px;background:var(--espresso);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.4rem;box-shadow:0 8px 20px rgba(139,107,74,0.3);">📞</div>
         <div style="font-size:0.7rem;color:var(--espresso);font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">STEP 2</div>
         <div style="font-size:0.9rem;font-weight:600;color:var(--dark-brown);">專人聯繫</div>
         <div style="font-size:0.78rem;color:var(--warm-gray);margin-top:4px;">24小時內回覆</div>
       </div>
-      <!-- Step 3 -->
       <div class="text-center">
         <div style="width:56px;height:56px;background:var(--espresso);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.4rem;box-shadow:0 8px 20px rgba(139,107,74,0.3);">🧪</div>
         <div style="font-size:0.7rem;color:var(--espresso);font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">STEP 3</div>
         <div style="font-size:0.9rem;font-weight:600;color:var(--dark-brown);">試作確認</div>
         <div style="font-size:0.78rem;color:var(--warm-gray);margin-top:4px;">輕鬆上手試做</div>
       </div>
-      <!-- Step 4 -->
       <div class="text-center">
         <div style="width:56px;height:56px;background:var(--accent);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.4rem;box-shadow:0 8px 20px rgba(212,149,106,0.4);">🚀</div>
         <div style="font-size:0.7rem;color:var(--accent);font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">STEP 4</div>
@@ -522,7 +493,7 @@
           <div style="width:36px;height:36px;background:var(--latte);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">👩‍💻</div>
           <div>
             <div style="font-size:0.85rem;font-weight:600;color:var(--dark-brown);">欣怡</div>
-            <div style="font-size:0.75font-size:0.75rem;color:var(--warm-gray);">加入7個月 · 桃園</div>
+            <div style="font-size:0.75rem;color:var(--warm-gray);">加入7個月 · 桃園</div>
           </div>
           <div style="margin-left:auto;display:flex;gap:2px;">★★★★★</div>
         </div>
@@ -539,7 +510,6 @@
     <p class="text-center mb-10 fade-in" style="color:var(--warm-gray);font-size:0.88rem;transition-delay:0.2s;">拖動看看，讓數字說話</p>
 
     <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(196,168,130,0.2);border-radius:24px;padding:28px;" class="fade-in">
-      <!-- Daily qty -->
       <div class="mb-6">
         <label style="font-size:0.88rem;color:var(--mocha);display:block;margin-bottom:10px;font-weight:600;">
           每日完成數量：<span id="qtyVal" style="color:var(--latte);font-size:1.1rem;font-weight:700;">50</span> 件
@@ -551,7 +521,6 @@
         </div>
       </div>
 
-      <!-- Price per item -->
       <div class="mb-8">
         <label style="font-size:0.88rem;color:var(--mocha);display:block;margin-bottom:10px;font-weight:600;">
           單件價格：NT$<span id="priceVal" style="color:var(--latte);font-size:1.1rem;font-weight:700;">5</span>
@@ -563,7 +532,6 @@
         </div>
       </div>
 
-      <!-- Results -->
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
         <div style="background:rgba(196,168,130,0.12);border-radius:14px;padding:16px;text-align:center;">
           <div style="font-size:0.72rem;color:var(--warm-gray);margin-bottom:6px;">每日</div>
@@ -595,7 +563,6 @@
     <h2 class="text-center text-2xl font-bold mb-10 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">你可能想問的問題</h2>
     
     <div class="space-y-3 fade-in" style="transition-delay:0.2s;">
-      
       <details class="faq-item" style="background:var(--white);border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(139,107,74,0.07);">
         <summary style="display:flex;justify-content:space-between;align-items:center;">
           <span style="font-weight:600;color:var(--dark-brown);">需要支付任何費用嗎？</span>
@@ -658,9 +625,7 @@
   <div class="max-w-xl mx-auto fade-in">
     <div style="background:rgba(255,255,255,0.06);border:2px solid rgba(125,184,125,0.4);border-radius:20px;padding:28px;text-align:center;">
       <div style="font-size:2.5rem;margin-bottom:12px;">🛡️</div>
-      <h3 style="font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:700;color:#A8E6A8;margin-bottom:16px;">
-        防詐騙聲明
-      </h3>
+      <h3 style="font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:700;color:#A8E6A8;margin-bottom:16px;">防詐騙聲明</h3>
       <div class="space-y-3 text-left">
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <span style="color:#7DB87D;font-size:1.1rem;flex-shrink:0;">✅</span>
@@ -711,8 +676,6 @@
     <p class="text-center mb-8 fade-in" style="color:var(--warm-gray);font-size:0.88rem;transition-delay:0.2s;">填寫完成後，我們將在 <strong>24小時內</strong> 主動聯繫你</p>
     
     <div id="formCard" style="background:var(--white);border-radius:24px;padding:32px;box-shadow:0 12px 50px rgba(139,107,74,0.12);" class="fade-in">
-      
-      <!-- Name field -->
       <div class="mb-5">
         <label style="font-size:0.85rem;font-weight:600;color:var(--dark-brown);display:block;margin-bottom:8px;">
           姓名 <span style="color:var(--accent);">*</span>
@@ -721,7 +684,6 @@
         <p id="nameErr" style="font-size:0.75rem;color:#E07070;margin-top:4px;display:none;">請輸入姓名</p>
       </div>
 
-      <!-- Contact field -->
       <div class="mb-6">
         <label style="font-size:0.85rem;font-weight:600;color:var(--dark-brown);display:block;margin-bottom:8px;">
           聯繫方式 <span style="color:var(--accent);">*</span>
@@ -730,18 +692,15 @@
         <p id="contactErr" style="font-size:0.75rem;color:#E07070;margin-top:4px;display:none;">請輸入聯繫方式</p>
       </div>
 
-      <!-- Privacy note -->
       <p style="font-size:0.75rem;color:var(--warm-gray);margin-bottom:20px;text-align:center;">
         🔒 您的資料受到保護，僅用於接案聯繫，不會外流
       </p>
 
-      <!-- Submit -->
       <button id="submitBtn" onclick="submitForm()" class="cta-btn" style="width:100%;font-size:1.05rem;padding:18px;">
         🎯 立即免費申請名額
       </button>
     </div>
 
-    <!-- Success state (hidden) -->
     <div id="successCard" style="display:none;background:var(--white);border-radius:24px;padding:40px;box-shadow:0 12px 50px rgba(139,107,74,0.12);text-align:center;">
       <div style="font-size:3.5rem;margin-bottom:16px;">🎉</div>
       <h3 style="font-family:'Noto Serif TC',serif;font-size:1.5rem;font-weight:700;color:var(--dark-brown);margin-bottom:10px;">申請成功！</h3>
@@ -763,7 +722,6 @@
 <!-- ==================== HIDDEN PAGE ==================== -->
 <div id="hiddenPage">
   <div style="max-width:700px;margin:0 auto;padding:0 16px 40px;">
-    <!-- Header -->
     <div style="position:sticky;top:0;background:#1a1210;border-bottom:1px solid rgba(139,107,74,0.3);padding:16px 0;z-index:10;">
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <div>
@@ -780,7 +738,7 @@
       </div>
     </div>
 
-    <!-- Password gate (first shown) -->
+    <!-- Password gate -->
     <div id="pwGate" style="padding:60px 20px;text-align:center;">
       <div style="font-size:2.5rem;margin-bottom:20px;">🔐</div>
       <h3 style="color:var(--latte);font-family:'Noto Serif TC',serif;font-size:1.3rem;margin-bottom:8px;">歡迎來到秘密基地</h3>
@@ -793,37 +751,11 @@
       <p id="pwErr" style="color:#E07070;font-size:0.8rem;margin-top:8px;display:none;">密碼錯誤，請重試</p>
     </div>
 
-    <!-- Board (hidden until pw correct) -->
+    <!-- Board area -->
     <div id="boardArea" style="display:none;">
-      <!-- Messages area -->
       <div id="msgList" style="padding:20px 0;min-height:300px;display:flex;flex-direction:column;gap:16px;">
-        <!-- Default messages -->
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div style="flex-shrink:0;">
-            <div style="background:#3D2B1F;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">👑</div>
-          </div>
-          <div>
-            <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px;">
-              <span style="color:var(--latte);font-size:0.85rem;font-weight:600;">小雪</span>
-              <span class="badge badge-admin">管理員</span>
-              <span style="color:#555;font-size:0.72rem;">10:24</span>
-            </div>
-            <div class="chat-bubble admin">歡迎來到秘密基地！這裡是我們的內部討論區，有問題可以直接問喔 🙂</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div style="flex-shrink:0;">
-            <div style="background:#2E3D5C;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">🌟</div>
-          </div>
-          <div>
-            <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px;">
-              <span style="color:var(--latte);font-size:0.85rem;font-weight:600;">阿旺</span>
-              <span class="badge badge-mod">老手</span>
-              <span style="color:#555;font-size:0.72rem;">10:31</span>
-            </div>
-            <div class="chat-bubble mod">我做了三個月了，訣竅就是一次領大量材料，效率會提高很多。大家加油！</div>
-          </div>
-        </div>
+        <!-- Firebase 留言會動態載入到這裡 -->
+        <div style="text-align:center;color:#555;font-size:0.85rem;padding:40px 0;">載入留言中...</div>
       </div>
 
       <!-- Input area -->
@@ -847,14 +779,166 @@
   </div>
 </div>
 
-<!-- ==================== JAVASCRIPT ==================== -->
+<!-- ==================== FIREBASE (type=module) ==================== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCnKOd8xt96hkvlU2ql760EpAjn-rCC5gM",
+    authDomain: "handiwork-board.firebaseapp.com",
+    projectId: "handiwork-board",
+    storageBucket: "handiwork-board.firebasestorage.app",
+    messagingSenderId: "494966364246",
+    appId: "1:494966364246:web:19f5d02b17db8e301dc3f7"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  let isAdmin = false;
+
+  // ===== 即時讀取留言 =====
+  function startListening() {
+    const q = query(collection(db, "messages"), orderBy("timestamp", "asc"));
+    onSnapshot(q, (snapshot) => {
+      const list = document.getElementById('msgList');
+      list.innerHTML = '';
+      if (snapshot.empty) {
+        list.innerHTML = '<div style="text-align:center;color:#555;font-size:0.85rem;padding:40px 0;">還沒有留言，來第一個留言吧！</div>';
+        return;
+      }
+      snapshot.forEach((docSnap) => {
+        renderMsg(list, docSnap.data(), docSnap.id);
+      });
+      list.scrollTop = list.scrollHeight;
+    });
+  }
+
+  // ===== 渲染一則留言 =====
+  function renderMsg(list, d, id) {
+    const roleStyles = {
+      new:   { badge: 'badge-new',   label: '新人',   emoji: '🌱', bubble: 'user'  },
+      pro:   { badge: 'badge-pro',   label: '老手',   emoji: '⭐', bubble: 'mod'   },
+      admin: { badge: 'badge-admin', label: '管理者', emoji: '👑', bubble: 'admin' },
+    };
+    const rs = roleStyles[d.role] || roleStyles['new'];
+    const time = d.timestamp?.toDate
+      ? d.timestamp.toDate().toLocaleTimeString('zh-TW', {hour:'2-digit', minute:'2-digit'})
+      : '';
+
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;gap:10px;align-items:flex-start;';
+    div.innerHTML = `
+      <div style="flex-shrink:0;">
+        <div style="background:#2a1f1a;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">${rs.emoji}</div>
+      </div>
+      <div style="flex:1;">
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px;flex-wrap:wrap;">
+          <span style="color:#F5DEB3;font-size:0.85rem;font-weight:600;">${esc(d.nick)}</span>
+          <span class="badge ${rs.badge}">${rs.label}</span>
+          <span style="color:#555;font-size:0.72rem;">${time}</span>
+          ${isAdmin ? `<button onclick="window._deleteMsg('${id}')" style="background:#8B2020;color:#FFD0D0;border:none;border-radius:6px;padding:2px 8px;font-size:0.7rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🗑 刪除</button>` : ''}
+        </div>
+        <div class="chat-bubble ${rs.bubble}">${esc(d.msg)}</div>
+      </div>
+    `;
+    list.appendChild(div);
+  }
+
+  // ===== 傳送留言 =====
+  window.postMsg = async function() {
+    const nick = document.getElementById('boardNick').value.trim() || '匿名';
+    const msg  = document.getElementById('boardMsg').value.trim();
+    const role = isAdmin ? 'admin' : document.getElementById('boardRole').value;
+    if (!msg) return;
+    try {
+      await addDoc(collection(db, "messages"), { nick, msg, role, timestamp: serverTimestamp() });
+      document.getElementById('boardMsg').value = '';
+    } catch(e) {
+      alert('傳送失敗，請確認網路連線');
+    }
+  };
+
+  // ===== 刪除留言（管理者專用）=====
+  window._deleteMsg = async function(id) {
+    if (!isAdmin) return;
+    if (!confirm('確定要刪除這則留言嗎？')) return;
+    try {
+      await deleteDoc(doc(db, "messages", id));
+    } catch(e) {
+      alert('刪除失敗');
+    }
+  };
+
+  // ===== 密碼驗證 =====
+  window.checkPw = function() {
+    const pw = document.getElementById('hiddenPw').value;
+    if (pw === 'handsecret') {
+      document.getElementById('pwGate').style.display = 'none';
+      document.getElementById('boardArea').style.display = 'block';
+      startListening();
+    } else {
+      document.getElementById('pwErr').style.display = 'block';
+      document.getElementById('hiddenPw').style.borderColor = '#E07070';
+    }
+  };
+
+  // ===== 表單送出（含管理員判斷）=====
+  window.submitForm = function() {
+    const name    = document.getElementById('inputName').value.trim();
+    const contact = document.getElementById('inputContact').value.trim();
+    let valid = true;
+
+    if (!name) {
+      document.getElementById('nameErr').style.display = 'block';
+      document.getElementById('inputName').classList.add('error');
+      valid = false;
+    } else {
+      document.getElementById('nameErr').style.display = 'none';
+      document.getElementById('inputName').classList.remove('error');
+      document.getElementById('inputName').classList.add('success');
+    }
+
+    if (!contact) {
+      document.getElementById('contactErr').style.display = 'block';
+      document.getElementById('inputContact').classList.add('error');
+      valid = false;
+    } else {
+      document.getElementById('contactErr').style.display = 'none';
+      document.getElementById('inputContact').classList.remove('error');
+      document.getElementById('inputContact').classList.add('success');
+    }
+
+    if (!valid) return;
+
+    if (name === 'admin' && contact === '0000#secret') {
+      isAdmin = true;
+      document.getElementById('hiddenPage').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      startHiddenClock();
+      return;
+    }
+
+    document.getElementById('formCard').style.display = 'none';
+    const s = document.getElementById('successCard');
+    s.style.display = 'block';
+    s.classList.add('success-pop');
+  };
+
+  function esc(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+
+<!-- ==================== 一般 JAVASCRIPT ==================== -->
 <script>
 // ===== SCROLL FADE IN =====
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(el => {
-    if (el.isIntersecting) {
-      el.target.classList.add('visible');
-    }
+    if (el.isIntersecting) el.target.classList.add('visible');
   });
 }, { threshold: 0.12 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
@@ -876,14 +960,12 @@ function animateCounter(id, start, end, duration, prefix='', suffix='') {
     const progress = Math.min(elapsed / duration, 1);
     const ease = 1 - Math.pow(1 - progress, 3);
     const val = Math.floor(start + range * ease);
-    const formatted = val.toLocaleString('zh-TW');
-    el.textContent = prefix + formatted + suffix;
+    el.textContent = prefix + val.toLocaleString('zh-TW') + suffix;
     if (progress < 1) requestAnimationFrame(update);
   }
   requestAnimationFrame(update);
 }
 
-// Start counters when stats section is visible
 const statsObs = new IntersectionObserver((entries) => {
   if (entries[0].isIntersecting) {
     animateCounter('c-members', 0, 532, 1800);
@@ -894,7 +976,6 @@ const statsObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 statsObs.observe(document.getElementById('c-members'));
 
-// Dynamic counter that increments over time
 setInterval(() => {
   const el = document.getElementById('c-today');
   const cur = parseInt(el.textContent.replace(/,/g,'')) || 847;
@@ -908,98 +989,29 @@ function calcUpdate() {
   document.getElementById('qtyVal').textContent = qty;
   document.getElementById('priceVal').textContent = price;
   const daily = qty * price;
-  const week = daily * 7;
-  const month = daily * 30;
   const fmt = n => 'NT$' + n.toLocaleString('zh-TW');
   document.getElementById('r-daily').textContent = fmt(daily);
-  document.getElementById('r-week').textContent = fmt(week);
-  document.getElementById('r-month').textContent = fmt(month);
+  document.getElementById('r-week').textContent = fmt(daily * 7);
+  document.getElementById('r-month').textContent = fmt(daily * 30);
 }
 document.getElementById('qtySlider').addEventListener('input', calcUpdate);
 document.getElementById('priceSlider').addEventListener('input', calcUpdate);
 
-// ===== FORM SUBMIT =====
-function submitForm() {
-  const name = document.getElementById('inputName').value.trim();
-  const contact = document.getElementById('inputContact').value.trim();
-  let valid = true;
-
-  // Validate
-  const nameErr = document.getElementById('nameErr');
-  const contactErr = document.getElementById('contactErr');
-  const nameInput = document.getElementById('inputName');
-  const contactInput = document.getElementById('inputContact');
-
-  if (!name) {
-    nameErr.style.display = 'block';
-    nameInput.classList.add('error');
-    valid = false;
-  } else {
-    nameErr.style.display = 'none';
-    nameInput.classList.remove('error');
-    nameInput.classList.add('success');
-  }
-
-  if (!contact) {
-    contactErr.style.display = 'block';
-    contactInput.classList.add('error');
-    valid = false;
-  } else {
-    contactErr.style.display = 'none';
-    contactInput.classList.remove('error');
-    contactInput.classList.add('success');
-  }
-
-  if (!valid) return;
-
-  // === EASTER EGG ===
-  if (name === 'admin' && contact === '0000#secret') {
-    document.getElementById('hiddenPage').style.display = 'block';
-    document.body.style.overflow = 'hidden';
-    startHiddenClock();
-    return;
-  }
-
-  // Show success
-  document.getElementById('formCard').style.display = 'none';
-  const s = document.getElementById('successCard');
-  s.style.display = 'block';
-  s.classList.add('success-pop');
-}
-
-// Input live validation
+// ===== INPUT LIVE VALIDATION =====
 document.getElementById('inputName').addEventListener('input', function() {
   if (this.value.trim()) {
-    this.classList.remove('error');
-    this.classList.add('success');
+    this.classList.remove('error'); this.classList.add('success');
     document.getElementById('nameErr').style.display = 'none';
   }
 });
 document.getElementById('inputContact').addEventListener('input', function() {
   if (this.value.trim()) {
-    this.classList.remove('error');
-    this.classList.add('success');
+    this.classList.remove('error'); this.classList.add('success');
     document.getElementById('contactErr').style.display = 'none';
   }
 });
 
 // ===== HIDDEN PAGE =====
-const HIDDEN_PW = 'handsecret';
-
-function checkPw() {
-  const pw = document.getElementById('hiddenPw').value;
-  if (pw === HIDDEN_PW) {
-    document.getElementById('pwGate').style.display = 'none';
-    document.getElementById('boardArea').style.display = 'block';
-  } else {
-    document.getElementById('pwErr').style.display = 'block';
-    document.getElementById('hiddenPw').style.borderColor = '#E07070';
-  }
-}
-document.getElementById('hiddenPw') && document.getElementById('hiddenPw').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') checkPw();
-});
-
 function closeHidden() {
   document.getElementById('hiddenPage').style.display = 'none';
   document.body.style.overflow = '';
@@ -1016,49 +1028,7 @@ function startHiddenClock() {
   setInterval(tick, 1000);
 }
 
-// ===== BOARD =====
-const roleStyles = {
-  new: { badge: 'badge-new', label: '新人', emoji: '🌱', bubble: 'user' },
-  pro: { badge: 'badge-pro', label: '老手', emoji: '⭐', bubble: 'mod' },
-};
-
-function postMsg() {
-  const nick = document.getElementById('boardNick').value.trim() || '匿名';
-  const msg = document.getElementById('boardMsg').value.trim();
-  const role = document.getElementById('boardRole').value;
-  if (!msg) return;
-
-  const rs = roleStyles[role];
-  const now = new Date();
-  const time = now.toLocaleTimeString('zh-TW', {hour:'2-digit', minute:'2-digit'});
-
-  const div = document.createElement('div');
-  div.style.cssText = 'display:flex;gap:10px;align-items:flex-start;';
-  div.innerHTML = `
-    <div style="flex-shrink:0;">
-      <div style="background:#2a1f1a;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">${rs.emoji}</div>
-    </div>
-    <div>
-      <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px;">
-        <span style="color:#F5DEB3;font-size:0.85rem;font-weight:600;">${escHtml(nick)}</span>
-        <span class="badge ${rs.badge}">${rs.label}</span>
-        <span style="color:#555;font-size:0.72rem;">${time}</span>
-      </div>
-      <div class="chat-bubble ${rs.bubble}">${escHtml(msg)}</div>
-    </div>
-  `;
-
-  const list = document.getElementById('msgList');
-  list.appendChild(div);
-  list.scrollTop = list.scrollHeight;
-  document.getElementById('boardMsg').value = '';
-}
-
-function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// FAQ smooth open
+// ===== FAQ =====
 document.querySelectorAll('.faq-item').forEach(item => {
   item.addEventListener('toggle', () => {});
 });
