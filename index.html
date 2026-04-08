@@ -781,25 +781,23 @@
   </div>
 </div>
 
-<!-- ==================== FIREBASE (type=module) ==================== -->
 
 <!-- ==================== 後端 API（Railway）==================== -->
 <script>
   const API_BASE = 'https://secret-board-backend-production.up.railway.app';
   let isAdmin = false;
   let authToken = null;
+  let failCount = 0;
+  let lockUntil = 0;
 
   // ================================================================
   // 【密碼驗證 → 呼叫 /api/login】
   // ================================================================
-  let failCount = 0;
-  let lockUntil = 0;
-
   window.checkPw = async function() {
     const now = Date.now();
     if (now < lockUntil) {
       const secs = Math.ceil((lockUntil - now) / 1000);
-      showErr(`太多次錯誤，請等待 ${secs} 秒後再試`);
+      showPwErr('太多次錯誤，請等待 ' + secs + ' 秒後再試');
       return;
     }
 
@@ -807,13 +805,12 @@
     const pw = pwInput.value.trim();
     if (!pw) return;
 
-    // 假延遲（讓暴力破解更慢）
     const delay = Math.min(500 * failCount, 3000);
     if (delay > 0) await new Promise(r => setTimeout(r, delay));
 
     try {
-      // 先嘗試 admin，再嘗試 visitor
-      let res = await fetch(`${API_BASE}/api/login`, {
+      // 先嘗試 admin
+      let res = await fetch(API_BASE + '/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: 'admin', password: pw })
@@ -821,8 +818,8 @@
       let data = await res.json();
 
       if (!res.ok) {
-        // 不是 admin 密碼，試試 visitor
-        res = await fetch(`${API_BASE}/api/login`, {
+        // 再嘗試 visitor
+        res = await fetch(API_BASE + '/api/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username: 'visitor', password: pw })
@@ -831,34 +828,30 @@
       }
 
       if (!res.ok) {
-        // 兩個都失敗
         failCount++;
         if (failCount >= 5) {
           lockUntil = Date.now() + 60000;
-          showErr('錯誤次數過多，鎖定 60 秒');
+          showPwErr('錯誤次數過多，鎖定 60 秒');
         } else {
-          showErr(`密碼錯誤，請重試（剩餘 ${5 - failCount} 次）`);
+          showPwErr('密碼錯誤，請重試（剩餘 ' + (5 - failCount) + ' 次）');
         }
         pwInput.style.borderColor = '#E07070';
         pwInput.value = '';
         return;
       }
 
-      // 登入成功
       failCount = 0;
       authToken = data.token;
-      isAdmin = data.role === 'admin';
-      sessionStorage.setItem('token', data.token);
-      sessionStorage.setItem('role', data.role);
+      isAdmin = (data.role === 'admin');
       unlockBoard();
 
     } catch(e) {
-      showErr('連線失敗，請稍後再試');
+      showPwErr('連線失敗，請稍後再試');
     }
   };
 
-  function showErr(msg) {
-    const el = document.getElementById('pwErr');
+  function showPwErr(msg) {
+    var el = document.getElementById('pwErr');
     el.textContent = msg;
     el.style.display = 'block';
   }
@@ -867,7 +860,7 @@
     document.getElementById('pwGate').style.display = 'none';
     document.getElementById('boardArea').style.display = 'block';
     if (isAdmin) {
-      const adminBadge = document.getElementById('adminBadgeArea');
+      var adminBadge = document.getElementById('adminBadgeArea');
       if (adminBadge) adminBadge.style.display = 'inline-flex';
     }
     loadMessages();
@@ -876,121 +869,102 @@
   // ================================================================
   // 【讀取留言 → GET /api/messages】
   // ================================================================
-  async function loadMessages() {
-    const list = document.getElementById('msgList');
+  function loadMessages() {
+    var list = document.getElementById('msgList');
     list.innerHTML = '<div style="text-align:center;color:#555;font-size:0.85rem;padding:40px 0;">載入中...</div>';
 
-    try {
-      const res = await fetch(`${API_BASE}/api/messages`, {
-        headers: { 'Authorization': `Bearer ${authToken}` }
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        list.innerHTML = '<div style="text-align:center;color:#E07070;padding:40px 0;">載入失敗，請重新整理</div>';
-        return;
-      }
-
+    fetch(API_BASE + '/api/messages', {
+      headers: { 'Authorization': 'Bearer ' + authToken }
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
       list.innerHTML = '';
-      if (data.messages.length === 0) {
+      if (!data.messages || data.messages.length === 0) {
         list.innerHTML = '<div style="text-align:center;color:#555;font-size:0.85rem;padding:40px 0;">還沒有留言，來第一個留言吧！</div>';
         return;
       }
-
-      // 後端回傳的已經是明文，直接渲染
-      data.messages.reverse().forEach(msg => renderMsg(list, msg));
+      data.messages.forEach(function(msg) { renderMsg(list, msg); });
       list.scrollTop = list.scrollHeight;
-
-    } catch(e) {
+    })
+    .catch(function() {
       list.innerHTML = '<div style="text-align:center;color:#E07070;padding:40px 0;">連線失敗，請稍後再試</div>';
-    }
+    });
   }
 
   // ================================================================
   // 【渲染一則留言】
   // ================================================================
   function renderMsg(list, msg) {
-    const roleStyles = {
-      new:   { badge: 'badge-new',   label: '新人',   emoji: '🌱', bubble: 'user'  },
-      pro:   { badge: 'badge-pro',   label: '老手',   emoji: '⭐', bubble: 'mod'   },
+    var roleMap = {
       admin: { badge: 'badge-admin', label: '管理者', emoji: '👑', bubble: 'admin' },
+      visitor: { badge: 'badge-new', label: '新人',   emoji: '🌱', bubble: 'user'  }
     };
-    const role = isAdmin ? 'admin' : 'new';
-    const rs = roleStyles[role] || roleStyles['new'];
-    const time = new Date(msg.createdAt).toLocaleTimeString('zh-TW', {hour:'2-digit', minute:'2-digit'});
+    var rs = isAdmin ? roleMap.admin : roleMap.visitor;
+    var time = new Date(msg.createdAt).toLocaleTimeString('zh-TW', {hour:'2-digit', minute:'2-digit'});
 
-    const div = document.createElement('div');
-    div.style.cssText = 'display:flex;gap:10px;align-items:flex-start;';
-    div.innerHTML = `
-      <div style="flex-shrink:0;">
-        <div style="background:#2a1f1a;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">${rs.emoji}</div>
-      </div>
-      <div style="flex:1;">
-        <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px;flex-wrap:wrap;">
-          <span style="color:#F5DEB3;font-size:0.85rem;font-weight:600;">${esc(msg.username)}</span>
-          <span class="badge ${rs.badge}">${rs.label}</span>
-          <span style="color:#555;font-size:0.72rem;">${time}</span>
-          ${isAdmin ? `<button onclick="window._deleteMsg(${msg.id})" style="background:#8B2020;color:#FFD0D0;border:none;border-radius:6px;padding:2px 8px;font-size:0.7rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;">🗑 刪除</button>` : ''}
-        </div>
-        <div class="chat-bubble ${rs.bubble}">${esc(msg.content)}</div>
-      </div>
-    `;
+    var div = document.createElement('div');
+    div.style.cssText = 'display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;';
+    div.innerHTML =
+      '<div style="flex-shrink:0;">' +
+        '<div style="background:#2a1f1a;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">' + rs.emoji + '</div>' +
+      '</div>' +
+      '<div style="flex:1;">' +
+        '<div style="display:flex;gap:6px;align-items:center;margin-bottom:4px;flex-wrap:wrap;">' +
+          '<span style="color:#F5DEB3;font-size:0.85rem;font-weight:600;">' + esc(msg.username) + '</span>' +
+          '<span class="badge ' + rs.badge + '">' + rs.label + '</span>' +
+          '<span style="color:#555;font-size:0.72rem;">' + time + '</span>' +
+          (isAdmin ? '<button onclick="window._deleteMsg(' + msg.id + ')" style="background:#8B2020;color:#FFD0D0;border:none;border-radius:6px;padding:2px 8px;font-size:0.7rem;cursor:pointer;font-family:\'Noto Sans TC\',sans-serif;">🗑 刪除</button>' : '') +
+        '</div>' +
+        '<div class="chat-bubble ' + rs.bubble + '">' + esc(msg.content) + '</div>' +
+      '</div>';
     list.appendChild(div);
   }
 
   // ================================================================
   // 【傳送留言 → POST /api/messages】
   // ================================================================
-  window.postMsg = async function() {
-    const msgRaw = document.getElementById('boardMsg').value.trim();
+  window.postMsg = function() {
+    var msgRaw = document.getElementById('boardMsg').value.trim();
     if (!msgRaw || !authToken) return;
 
-    const sendBtn = document.querySelector('#boardArea button[onclick="postMsg()"]');
+    var sendBtn = document.querySelector('#boardArea button[onclick="postMsg()"]');
     if (sendBtn) { sendBtn.disabled = true; sendBtn.textContent = '傳送中...'; }
 
-    try {
-      const res = await fetch(`${API_BASE}/api/messages`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authToken}`
-        },
-        body: JSON.stringify({ content: msgRaw })
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.error || '傳送失敗');
-        return;
-      }
-
+    fetch(API_BASE + '/api/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authToken
+      },
+      body: JSON.stringify({ content: msgRaw })
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.error) { alert(data.error); return; }
       document.getElementById('boardMsg').value = '';
-      // 重新載入留言列表
-      await loadMessages();
-
-    } catch(e) {
-      alert('傳送失敗，請確認網路連線');
-    } finally {
+      loadMessages();
+    })
+    .catch(function() { alert('傳送失敗，請確認網路連線'); })
+    .finally(function() {
       if (sendBtn) { sendBtn.disabled = false; sendBtn.textContent = '傳送'; }
-    }
+    });
   };
 
   // ================================================================
-  // 【刪除留言 → DELETE /api/messages/:id（管理者專用）】
+  // 【刪除留言 → DELETE /api/messages/:id】
   // ================================================================
-  window._deleteMsg = async function(id) {
+  window._deleteMsg = function(id) {
     if (!isAdmin) return;
     if (!confirm('確定要刪除這則留言嗎？')) return;
-    try {
-      const res = await fetch(`${API_BASE}/api/messages/${id}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${authToken}` }
-      });
+    fetch(API_BASE + '/api/messages/' + id, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + authToken }
+    })
+    .then(function(res) {
       if (!res.ok) { alert('刪除失敗'); return; }
-      await loadMessages();
-    } catch(e) {
-      alert('刪除失敗');
-    }
+      loadMessages();
+    })
+    .catch(function() { alert('刪除失敗'); });
   };
 
   // ================================================================
@@ -1009,9 +983,34 @@
 
   function esc(str) {
     if (!str) return '';
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 </script>
+<!-- ==================== 一般 JAVASCRIPT ==================== -->
+<script>
+// ===== SCROLL FADE IN =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) el.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ===== FLOATING NAV =====
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('floatingNav');
+  nav.style.opacity = window.scrollY > 400 ? '1' : '0';
+  nav.style.pointerEvents = window.scrollY > 400 ? 'auto' : 'none';
+});
+
+// ===== LIVE COUNTERS =====
+function animateCounter(id, start, end, duration, prefix='', suffix='') {
+  const el = document.getElementById(id);
+  const range = end - start;
+  const startTime = performance.now();
+  function update(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
     const ease = 1 - Math.pow(1 - progress, 3);
     const val = Math.floor(start + range * ease);
     el.textContent = prefix + val.toLocaleString('zh-TW') + suffix;
