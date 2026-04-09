@@ -756,7 +756,7 @@
     <!-- Board area -->
     <div id="boardArea" style="display:none;">
       <div id="msgList" style="padding:20px 0;min-height:300px;display:flex;flex-direction:column;gap:16px;">
-        <!-- 留言會動態載入到這裡 -->
+        <!-- Firebase 留言會動態載入到這裡 -->
         <div style="text-align:center;color:#555;font-size:0.85rem;padding:40px 0;">載入留言中...</div>
       </div>
 
@@ -781,74 +781,89 @@
   </div>
 </div>
 
-
 <!-- ==================== 後端 API（Railway）==================== -->
 <script>
-  const API_BASE = 'https://secret-board-backend-production.up.railway.app';
-  let isAdmin = false;
-  let authToken = null;
-  let failCount = 0;
-  let lockUntil = 0;
+  var API_BASE = 'https://secret-board-backend-production.up.railway.app';
+  var isAdmin = false;
+  var authToken = null;
+  var failCount = 0;
+  var lockUntil = 0;
 
-  // ================================================================
-  // 【密碼驗證 → 呼叫 /api/login】
-  // ================================================================
-  window.checkPw = async function() {
-    const now = Date.now();
+  window.checkPw = function() {
+    var now = Date.now();
     if (now < lockUntil) {
-      const secs = Math.ceil((lockUntil - now) / 1000);
+      var secs = Math.ceil((lockUntil - now) / 1000);
       showPwErr('太多次錯誤，請等待 ' + secs + ' 秒後再試');
       return;
     }
-
-    const pwInput = document.getElementById('hiddenPw');
-    const pw = pwInput.value.trim();
+    var pwInput = document.getElementById('hiddenPw');
+    var pw = pwInput.value.trim();
     if (!pw) return;
 
-    const delay = Math.min(500 * failCount, 3000);
-    if (delay > 0) await new Promise(r => setTimeout(r, delay));
+    var delay = Math.min(500 * failCount, 3000);
 
-    try {
-      // 先嘗試 admin
-      let res = await fetch(API_BASE + '/api/login', {
+    var doLogin = function() {
+      fetch(API_BASE + '/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: 'admin', password: pw })
-      });
-      let data = await res.json();
-
-      if (!res.ok) {
-        // 再嘗試 visitor
-        res = await fetch(API_BASE + '/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: 'visitor', password: pw })
-        });
-        data = await res.json();
-      }
-
-      if (!res.ok) {
-        failCount++;
-        if (failCount >= 5) {
-          lockUntil = Date.now() + 60000;
-          showPwErr('錯誤次數過多，鎖定 60 秒');
+      })
+      .then(function(res) {
+        return res.json().then(function(data) { return { ok: res.ok, data: data }; });
+      })
+      .then(function(result) {
+        if (result.ok) {
+          onLoginSuccess(result.data);
         } else {
-          showPwErr('密碼錯誤，請重試（剩餘 ' + (5 - failCount) + ' 次）');
+          return fetch(API_BASE + '/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: 'visitor', password: pw })
+          })
+          .then(function(res2) {
+            return res2.json().then(function(data2) { return { ok: res2.ok, data: data2 }; });
+          })
+          .then(function(result2) {
+            if (result2.ok) {
+              onLoginSuccess(result2.data);
+            } else {
+              failCount++;
+              if (failCount >= 5) {
+                lockUntil = Date.now() + 60000;
+                showPwErr('錯誤次數過多，鎖定 60 秒');
+              } else {
+                showPwErr('密碼錯誤，請重試（剩餘 ' + (5 - failCount) + ' 次）');
+              }
+              pwInput.style.borderColor = '#E07070';
+              pwInput.value = '';
+            }
+          });
         }
-        pwInput.style.borderColor = '#E07070';
-        pwInput.value = '';
-        return;
-      }
+      })
+      .catch(function() {
+        showPwErr('連線失敗，請稍後再試');
+      });
+    };
 
-      failCount = 0;
-      authToken = data.token;
-      isAdmin = (data.role === 'admin');
-      unlockBoard();
-
-    } catch(e) {
-      showPwErr('連線失敗，請稍後再試');
+    if (delay > 0) {
+      setTimeout(doLogin, delay);
+    } else {
+      doLogin();
     }
   };
+
+  function onLoginSuccess(data) {
+    failCount = 0;
+    authToken = data.token;
+    isAdmin = (data.role === 'admin');
+    document.getElementById('pwGate').style.display = 'none';
+    document.getElementById('boardArea').style.display = 'block';
+    if (isAdmin) {
+      var badge = document.getElementById('adminBadgeArea');
+      if (badge) badge.style.display = 'inline-flex';
+    }
+    loadMessages();
+  }
 
   function showPwErr(msg) {
     var el = document.getElementById('pwErr');
@@ -856,27 +871,13 @@
     el.style.display = 'block';
   }
 
-  function unlockBoard() {
-    document.getElementById('pwGate').style.display = 'none';
-    document.getElementById('boardArea').style.display = 'block';
-    if (isAdmin) {
-      var adminBadge = document.getElementById('adminBadgeArea');
-      if (adminBadge) adminBadge.style.display = 'inline-flex';
-    }
-    loadMessages();
-  }
-
-  // ================================================================
-  // 【讀取留言 → GET /api/messages】
-  // ================================================================
   function loadMessages() {
     var list = document.getElementById('msgList');
     list.innerHTML = '<div style="text-align:center;color:#555;font-size:0.85rem;padding:40px 0;">載入中...</div>';
-
     fetch(API_BASE + '/api/messages', {
       headers: { 'Authorization': 'Bearer ' + authToken }
     })
-    .then(function(res) { return res.json(); })
+    .then(function(r) { return r.json(); })
     .then(function(data) {
       list.innerHTML = '';
       if (!data.messages || data.messages.length === 0) {
@@ -891,45 +892,38 @@
     });
   }
 
-  // ================================================================
-  // 【渲染一則留言】
-  // ================================================================
   function renderMsg(list, msg) {
-    var roleMap = {
-      admin: { badge: 'badge-admin', label: '管理者', emoji: '👑', bubble: 'admin' },
-      visitor: { badge: 'badge-new', label: '新人',   emoji: '🌱', bubble: 'user'  }
-    };
-    var rs = isAdmin ? roleMap.admin : roleMap.visitor;
+    var emoji = isAdmin ? '👑' : '🌱';
+    var badgeClass = isAdmin ? 'badge-admin' : 'badge-new';
+    var badgeLabel = isAdmin ? '管理者' : '新人';
+    var bubbleClass = isAdmin ? 'admin' : 'user';
     var time = new Date(msg.createdAt).toLocaleTimeString('zh-TW', {hour:'2-digit', minute:'2-digit'});
-
+    var deleteBtn = isAdmin
+      ? '<button onclick="window._deleteMsg(' + msg.id + ')" style="background:#8B2020;color:#FFD0D0;border:none;border-radius:6px;padding:2px 8px;font-size:0.7rem;cursor:pointer;">🗑 刪除</button>'
+      : '';
     var div = document.createElement('div');
     div.style.cssText = 'display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;';
     div.innerHTML =
       '<div style="flex-shrink:0;">' +
-        '<div style="background:#2a1f1a;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">' + rs.emoji + '</div>' +
+        '<div style="background:#2a1f1a;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">' + emoji + '</div>' +
       '</div>' +
       '<div style="flex:1;">' +
         '<div style="display:flex;gap:6px;align-items:center;margin-bottom:4px;flex-wrap:wrap;">' +
           '<span style="color:#F5DEB3;font-size:0.85rem;font-weight:600;">' + esc(msg.username) + '</span>' +
-          '<span class="badge ' + rs.badge + '">' + rs.label + '</span>' +
+          '<span class="badge ' + badgeClass + '">' + badgeLabel + '</span>' +
           '<span style="color:#555;font-size:0.72rem;">' + time + '</span>' +
-          (isAdmin ? '<button onclick="window._deleteMsg(' + msg.id + ')" style="background:#8B2020;color:#FFD0D0;border:none;border-radius:6px;padding:2px 8px;font-size:0.7rem;cursor:pointer;font-family:\'Noto Sans TC\',sans-serif;">🗑 刪除</button>' : '') +
+          deleteBtn +
         '</div>' +
-        '<div class="chat-bubble ' + rs.bubble + '">' + esc(msg.content) + '</div>' +
+        '<div class="chat-bubble ' + bubbleClass + '">' + esc(msg.content) + '</div>' +
       '</div>';
     list.appendChild(div);
   }
 
-  // ================================================================
-  // 【傳送留言 → POST /api/messages】
-  // ================================================================
   window.postMsg = function() {
     var msgRaw = document.getElementById('boardMsg').value.trim();
     if (!msgRaw || !authToken) return;
-
     var sendBtn = document.querySelector('#boardArea button[onclick="postMsg()"]');
     if (sendBtn) { sendBtn.disabled = true; sendBtn.textContent = '傳送中...'; }
-
     fetch(API_BASE + '/api/messages', {
       method: 'POST',
       headers: {
@@ -938,7 +932,7 @@
       },
       body: JSON.stringify({ content: msgRaw })
     })
-    .then(function(res) { return res.json(); })
+    .then(function(r) { return r.json(); })
     .then(function(data) {
       if (data.error) { alert(data.error); return; }
       document.getElementById('boardMsg').value = '';
@@ -950,9 +944,6 @@
     });
   };
 
-  // ================================================================
-  // 【刪除留言 → DELETE /api/messages/:id】
-  // ================================================================
   window._deleteMsg = function(id) {
     if (!isAdmin) return;
     if (!confirm('確定要刪除這則留言嗎？')) return;
@@ -960,16 +951,13 @@
       method: 'DELETE',
       headers: { 'Authorization': 'Bearer ' + authToken }
     })
-    .then(function(res) {
-      if (!res.ok) { alert('刪除失敗'); return; }
+    .then(function(r) {
+      if (!r.ok) { alert('刪除失敗'); return; }
       loadMessages();
     })
     .catch(function() { alert('刪除失敗'); });
   };
 
-  // ================================================================
-  // 【彩蛋觸發：開啟秘密基地】
-  // ================================================================
   window._openHiddenPage = function() {
     document.getElementById('hiddenPage').style.display = 'block';
     document.body.style.overflow = 'hidden';
@@ -986,6 +974,7 @@
     return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 </script>
+
 <!-- ==================== 一般 JAVASCRIPT ==================== -->
 <script>
 // ===== SCROLL FADE IN =====
