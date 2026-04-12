@@ -3,10 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>居家手工代工 │ 在家接案平台</title>
+<title>手作生活工坊｜居家手工代工接案平台</title>
+<meta name="description" content="居家手工包裝接案平台，免押金、彈性工時、論件計酬。不需經驗，在家輕鬆完成香氛蠟燭包裝、文具整理、小物裝袋，每週固定匯款。立即申請名額！">
+<meta name="keywords" content="居家接案,手工代工,在家工作,兼職,彈性工時,手工包裝">
+<meta property="og:title" content="手作生活工坊｜居家手工代工接案平台">
+<meta property="og:description" content="免押金、彈性工時、每週匯款。超過 500 位夥伴已在家穩定接案，立即申請！">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://og-image.vercel.app/手作生活工坊.png">
+<link rel="canonical" href="https://handiwork.tw/">
+
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
   :root {
     --cream: #F7F1E8;
@@ -14,14 +23,18 @@
     --mocha: #C4A882;
     --espresso: #8B6B4A;
     --dark-brown: #4A3728;
-    --warm-gray: #9E9289;
+    --warm-gray: #7A6E66;
     --light-gray: #F2EDE6;
     --white: #FDFAF6;
     --accent: #D4956A;
+    --green: #5A9E6F;
+    --green-light: #A8D5B5;
   }
 
-  * { box-sizing: border-box; }
-  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
   body {
     font-family: 'Noto Sans TC', sans-serif;
     background: var(--cream);
@@ -29,20 +42,17 @@
     overflow-x: hidden;
   }
 
-  h1, h2, h3 {
-    font-family: 'Noto Serif TC', serif;
-  }
+  h1, h2, h3 { font-family: 'Noto Serif TC', serif; }
 
+  /* ── Fade In ── */
   .fade-in {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(28px);
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
-  .fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+  /* ── Buttons ── */
   .cta-btn {
     background: linear-gradient(135deg, var(--accent), var(--espresso));
     color: white;
@@ -60,8 +70,8 @@
     font-family: 'Noto Sans TC', sans-serif;
   }
   .cta-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 40px rgba(139,107,74,0.4);
+    transform: scale(1.04);
+    box-shadow: 0 12px 36px rgba(139,107,74,0.38);
   }
 
   .cta-btn-outline {
@@ -74,7 +84,7 @@
     cursor: pointer;
     font-size: 1rem;
     letter-spacing: 0.05em;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    transition: all 0.2s ease;
     display: inline-block;
     text-align: center;
     text-decoration: none;
@@ -83,58 +93,325 @@
   .cta-btn-outline:hover {
     background: var(--espresso);
     color: white;
-    transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(139,107,74,0.3);
+    transform: scale(1.04);
+    box-shadow: 0 10px 28px rgba(139,107,74,0.3);
   }
 
+  /* ── Cards ── */
   .hover-card {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   .hover-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 50px rgba(100,70,40,0.15);
+    box-shadow: 0 20px 48px rgba(100,70,40,0.14);
   }
 
+  /* ── Navbar ── */
+  #navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 900;
+    background: rgba(253,250,246,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(196,168,130,0.25);
+    transition: box-shadow 0.3s;
+    padding: 0 24px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #navbar.scrolled { box-shadow: 0 4px 24px rgba(74,55,40,0.1); }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--dark-brown);
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--accent), var(--espresso));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 0.82rem;
+    color: var(--warm-gray);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--espresso); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--accent), var(--espresso));
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 24px;
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+  }
+  .nav-cta:hover { opacity: 0.9; color: white !important; }
+
+  /* Mobile nav */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    #navbar { padding: 0 16px; }
+    .cta-btn, .cta-btn-outline { width: 100%; display: block; text-align: center; }
+  }
+
+  /* ── Hero ── */
   #hero {
-    background: linear-gradient(160deg, var(--white) 0%, var(--latte) 60%, var(--cream) 100%);
+    background: linear-gradient(160deg, var(--white) 0%, var(--latte) 55%, var(--cream) 100%);
     min-height: 100vh;
+    padding-top: 80px;
     position: relative;
     overflow: hidden;
   }
   #hero::before {
     content: '';
     position: absolute;
-    top: -100px;
-    right: -100px;
-    width: 500px;
-    height: 500px;
+    top: -80px; right: -80px;
+    width: 480px; height: 480px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(196,168,130,0.25) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(212,149,106,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #hero::after {
+    content: '';
+    position: absolute;
+    bottom: 60px; left: -60px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,168,130,0.15) 0%, transparent 70%);
     pointer-events: none;
   }
 
+  /* ── Wave divider ── */
+  .wave-divider { width: 100%; overflow: hidden; line-height: 0; display: block; }
+  .wave-divider svg { display: block; }
+
+  /* ── Trust badge ── */
+  .trust-badge {
+    background: rgba(255,255,255,0.72);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--latte);
+  }
+
+  /* ── Pulse dot ── */
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+  .pulse-dot {
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse-dot 1.5s infinite;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  /* ── Stats ── */
+  .stat-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(196,168,130,0.2);
+    border-radius: 20px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: background 0.3s;
+  }
+  .stat-card:hover { background: rgba(255,255,255,0.12); }
   .counter-val {
     font-family: 'Noto Serif TC', serif;
     font-weight: 700;
   }
 
-  .step-line {
+  /* ── Work cards ── */
+  .work-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(139,107,74,0.08);
+    border: 1px solid rgba(196,168,130,0.15);
+  }
+  .work-icon {
+    width: 72px; height: 72px;
+    border-radius: 18px;
+    margin: 0 auto 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem;
+  }
+  .price-tag {
+    background: var(--light-gray);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    color: var(--espresso);
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 14px;
+    border: 1px solid rgba(196,168,130,0.3);
+  }
+
+  /* ── Advantages ── */
+  .adv-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 28px 24px;
+    text-align: center;
+    box-shadow: 0 6px 28px rgba(139,107,74,0.09);
+    border: 1px solid rgba(196,168,130,0.12);
+  }
+  .adv-icon {
+    width: 58px; height: 58px;
+    background: linear-gradient(135deg, var(--latte), var(--mocha));
+    border-radius: 16px;
+    margin: 0 auto 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+  }
+
+  /* ── Steps ── */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  @media (max-width: 640px) {
+    .steps-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .step-connector { display: none; }
+  }
+  .step-item {
+    text-align: center;
+    position: relative;
+    padding: 0 8px;
+  }
+  .step-circle {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    box-shadow: 0 8px 20px rgba(139,107,74,0.28);
+    position: relative;
+    z-index: 2;
+  }
+  .step-connector {
     position: absolute;
     top: 28px;
     left: calc(50% + 28px);
-    width: calc(100% - 56px);
+    right: calc(-50% + 28px);
     height: 2px;
-    background: linear-gradient(90deg, var(--mocha), var(--latte));
+    background: linear-gradient(90deg, var(--espresso), var(--mocha));
+    z-index: 1;
   }
 
+  /* ── Testimonials ── */
+  .testimonial-card {
+    background: var(--white);
+    border-left: 4px solid var(--mocha);
+    border-radius: 16px;
+    padding: 28px 24px 20px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(139,107,74,0.07);
+  }
+  .testimonial-card::before {
+    content: '\201C';
+    position: absolute;
+    top: -8px; left: 18px;
+    font-size: 4.5rem;
+    font-family: Georgia, serif;
+    color: var(--mocha);
+    opacity: 0.35;
+    line-height: 1;
+  }
+  .stars { color: #C4A320; font-size: 0.9rem; letter-spacing: 2px; }
+  .avatar {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--latte), var(--mocha));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  /* ── Calculator ── */
+  .calc-box {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(196,168,130,0.22);
+    border-radius: 24px;
+    padding: 32px 28px;
+  }
+  .result-card {
+    border-radius: 16px;
+    padding: 18px 12px;
+    text-align: center;
+  }
+
+  /* ── Progress bar ── */
+  .progress-track {
+    background: rgba(196,168,130,0.2);
+    border-radius: 99px;
+    height: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--accent), var(--espresso));
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+  }
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shimmer 2s infinite;
+  }
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* ── FAQ ── */
+  .faq-item {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 12px rgba(139,107,74,0.07);
+    border: 1px solid rgba(196,168,130,0.1);
+  }
   .faq-item summary {
     list-style: none;
     cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
   }
   .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-icon { transition: transform 0.3s ease; color: var(--mocha); font-size: 1.3rem; font-weight: 300; }
   .faq-item[open] summary .faq-icon { transform: rotate(45deg); }
-  .faq-icon { transition: transform 0.3s ease; }
 
+  /* ── Form ── */
   .form-input {
     width: 100%;
     padding: 14px 18px;
@@ -149,36 +426,119 @@
   }
   .form-input:focus {
     border-color: var(--mocha);
-    box-shadow: 0 0 0 3px rgba(196,168,130,0.25);
+    box-shadow: 0 0 0 3px rgba(196,168,130,0.22);
   }
-  .form-input.error { border-color: #E07070; }
-  .form-input.success { border-color: #7DB87D; }
-
-  .trust-badge {
-    background: rgba(255,255,255,0.7);
-    backdrop-filter: blur(8px);
-    border: 1px solid var(--latte);
-  }
-
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.4); }
-  }
-  .pulse-dot {
-    width: 8px; height: 8px;
-    background: #7DB87D;
-    border-radius: 50%;
-    animation: pulse-dot 1.5s infinite;
-    display: inline-block;
+  .form-input.error { border-color: #E07070; box-shadow: 0 0 0 3px rgba(224,112,112,0.15); }
+  .form-input.success { border-color: var(--green); }
+  .form-input.error-shake { animation: shake 0.4s ease; }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
   }
 
+  /* ── Region select ── */
+  .form-select {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid var(--latte);
+    border-radius: 12px;
+    background: var(--white);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 1rem;
+    color: var(--dark-brown);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238B6B4A' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+    cursor: pointer;
+  }
+  .form-select:focus {
+    border-color: var(--mocha);
+    box-shadow: 0 0 0 3px rgba(196,168,130,0.22);
+  }
+
+  /* ── Success animation ── */
   @keyframes successPop {
-    0% { opacity: 0; transform: scale(0.8) translateY(10px); }
-    60% { transform: scale(1.05) translateY(-5px); }
+    0% { opacity: 0; transform: scale(0.85) translateY(12px); }
+    60% { transform: scale(1.04) translateY(-4px); }
     100% { opacity: 1; transform: scale(1) translateY(0); }
   }
   .success-pop { animation: successPop 0.5s ease forwards; }
 
+  /* ── Anti-scam ── */
+  .antiscam-card {
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(90,158,111,0.4);
+    border-radius: 20px;
+    padding: 32px 28px;
+    text-align: center;
+  }
+
+  /* ── Cookie Banner ── */
+  #cookieBanner {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 950;
+    background: var(--dark-brown);
+    border-top: 1px solid rgba(196,168,130,0.3);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    transform: translateY(0);
+    transition: transform 0.4s ease;
+  }
+  #cookieBanner.hidden { transform: translateY(100%); }
+
+  /* ── Floating CTA ── */
+  #floatingNav {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    z-index: 800;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  #floatingNav.show { opacity: 1; pointer-events: auto; }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--dark-brown);
+    padding: 48px 24px 32px;
+  }
+  .footer-grid {
+    max-width: 800px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 640px) {
+    .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+  .footer-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--latte);
+    margin-bottom: 10px;
+  }
+  .footer-logo-icon {
+    width: 34px; height: 34px;
+    background: linear-gradient(135deg, var(--accent), var(--espresso));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+
+  /* ── Hidden page ── */
   #hiddenPage {
     display: none;
     position: fixed;
@@ -188,6 +548,7 @@
     overflow-y: auto;
   }
 
+  /* ── Chat ── */
   .chat-bubble {
     max-width: 80%;
     padding: 10px 16px;
@@ -196,8 +557,8 @@
     line-height: 1.5;
   }
   .chat-bubble.admin { background: #3D2B1F; color: #F5DEB3; border-bottom-left-radius: 4px; }
-  .chat-bubble.user { background: #5C3D2E; color: #FAEBD7; border-bottom-right-radius: 4px; }
-  .chat-bubble.mod { background: #2E3D5C; color: #ADD8E6; border-bottom-left-radius: 4px; }
+  .chat-bubble.user  { background: #5C3D2E; color: #FAEBD7; border-bottom-right-radius: 4px; }
+  .chat-bubble.mod   { background: #2E3D5C; color: #ADD8E6; border-bottom-left-radius: 4px; }
 
   .badge {
     font-size: 0.65rem;
@@ -207,174 +568,217 @@
     letter-spacing: 0.05em;
   }
   .badge-admin { background: #8B2020; color: #FFD0D0; }
-  .badge-mod { background: #1a3a6b; color: #9dcfff; }
-  .badge-new { background: #2d5a2d; color: #a8e6a8; }
-  .badge-pro { background: #4a3a1a; color: #f5d070; }
+  .badge-mod   { background: #1a3a6b; color: #9dcfff; }
+  .badge-new   { background: #2d5a2d; color: #a8e6a8; }
+  .badge-pro   { background: #4a3a1a; color: #f5d070; }
 
-  .wave-divider {
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
+  /* ── Section label ── */
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
   }
 
-  .stat-card {
-    background: var(--white);
-    border: 1px solid var(--latte);
-    border-radius: 20px;
-    padding: 24px 20px;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(139,107,74,0.08);
-  }
-
-  .testimonial-card {
-    background: var(--white);
-    border-left: 4px solid var(--mocha);
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-  }
-  .testimonial-card::before {
-    content: '"';
-    position: absolute;
-    top: -10px;
-    left: 16px;
-    font-size: 4rem;
-    font-family: Georgia, serif;
-    color: var(--mocha);
-    opacity: 0.4;
-    line-height: 1;
-  }
-
-  #floatingNav {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 1000;
-    transition: opacity 0.3s;
-  }
-
-  @media (max-width: 640px) {
-    .cta-btn, .cta-btn-outline { width: 100%; display: block; }
-    #floatingNav { bottom: 16px; right: 16px; }
+  /* ── Decorative divider ── */
+  .deco-line {
+    width: 40px; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--mocha));
+    border-radius: 99px;
+    margin: 10px auto 0;
   }
 </style>
 </head>
 <body>
 
+<!-- ==================== COOKIE BANNER ==================== -->
+<div id="cookieBanner" aria-live="polite">
+  <p style="color:var(--latte);font-size:0.8rem;line-height:1.6;flex:1;">
+    本平台使用 Firebase 服務儲存留言及分析數據，繼續使用即表示您同意我們的
+    <a href="#" style="color:var(--accent);text-decoration:underline;">隱私政策</a>。
+  </p>
+  <button onclick="acceptCookie()" class="cta-btn" style="padding:8px 20px;font-size:0.8rem;white-space:nowrap;">
+    我了解，繼續
+  </button>
+</div>
+
+<!-- ==================== NAVBAR ==================== -->
+<nav id="navbar" role="navigation" aria-label="主要導覽">
+  <a href="#" class="nav-logo" aria-label="手作生活工坊首頁">
+    <div class="nav-logo-icon" aria-hidden="true">🏠</div>
+    <span>手作生活工坊</span>
+  </a>
+  <div class="nav-links">
+    <a href="#work-types">工作內容</a>
+    <a href="#flow">接案流程</a>
+    <a href="#testimonials">真實心得</a>
+    <a href="#faq">常見問題</a>
+    <a href="#form" class="nav-cta">立即申請</a>
+  </div>
+</nav>
+
 <!-- ==================== FLOATING CTA ==================== -->
-<div id="floatingNav" style="opacity:0;">
-  <a href="#form" class="cta-btn" style="padding:12px 24px;font-size:0.85rem;">
-    📝 立即免費申請
+<div id="floatingNav" aria-hidden="true">
+  <a href="#form" class="cta-btn" style="padding:12px 24px;font-size:0.85rem;box-shadow:0 8px 28px rgba(139,107,74,0.4);">
+    立即免費申請
   </a>
 </div>
 
 <!-- ==================== 1. HERO ==================== -->
 <section id="hero" class="px-5 pt-16 pb-20 flex flex-col items-center text-center">
-  <div class="mb-10 fade-in">
-    <p class="text-xs tracking-widest uppercase text-warm-gray mb-1" style="color:var(--warm-gray);">官方認證居家接案平台</p>
+
+  <div class="mb-8 fade-in">
+    <p class="section-label mb-2" style="color:var(--warm-gray);">官方認證居家接案平台</p>
     <div class="flex items-center justify-center gap-2">
-      <span style="font-size:1.6rem;">🏠</span>
-      <span style="font-family:'Noto Serif TC',serif;font-size:1.2rem;color:var(--espresso);font-weight:600;">手作生活工坊</span>
+      <div style="width:2px;height:16px;background:var(--mocha);border-radius:1px;"></div>
+      <span style="font-family:'Noto Serif TC',serif;font-size:1.1rem;color:var(--espresso);font-weight:700;">手作生活工坊</span>
+      <div style="width:2px;height:16px;background:var(--mocha);border-radius:1px;"></div>
     </div>
   </div>
 
-  <div class="trust-badge rounded-full px-4 py-2 mb-8 flex items-center gap-2 fade-in" style="transition-delay:0.1s;">
-    <span class="pulse-dot"></span>
-    <span style="font-size:0.8rem;color:var(--espresso);">本週僅剩 <strong>12</strong> 個名額開放申請</span>
+  <div class="trust-badge rounded-full px-4 py-2 mb-8 flex items-center gap-2 fade-in" style="transition-delay:0.1s;" aria-label="目前開放申請中">
+    <span class="pulse-dot" aria-hidden="true"></span>
+    <span style="font-size:0.8rem;color:var(--espresso);">平台運作中・現正開放申請</span>
   </div>
 
-  <h1 class="fade-in" style="font-size:clamp(1.8rem,6vw,3rem);font-weight:700;line-height:1.3;color:var(--dark-brown);max-width:600px;transition-delay:0.15s;">
+  <h1 class="fade-in" style="font-size:clamp(1.9rem,6vw,3.2rem);font-weight:700;line-height:1.3;color:var(--dark-brown);max-width:620px;transition-delay:0.15s;">
     在家也能穩定接案<br>
     <span style="color:var(--accent);">每天多一份收入</span>
   </h1>
-  
-  <p class="mt-4 mb-6 fade-in" style="font-size:clamp(1rem,3vw,1.2rem);color:var(--warm-gray);max-width:480px;line-height:1.7;transition-delay:0.25s;">
+
+  <p class="mt-4 mb-6 fade-in" style="font-size:clamp(1rem,3vw,1.15rem);color:var(--warm-gray);max-width:480px;line-height:1.8;transition-delay:0.25s;">
     簡單手工包裝，新手也能快速上手<br>不需經驗・不需設備・在家完成
   </p>
 
-  <div class="flex flex-wrap justify-center gap-4 mb-10 fade-in" style="transition-delay:0.35s;">
-    <span class="trust-badge rounded-full px-4 py-2 text-sm font-medium" style="color:var(--espresso);">✔ 免押金</span>
-    <span class="trust-badge rounded-full px-4 py-2 text-sm font-medium" style="color:var(--espresso);">✔ 彈性接案</span>
-    <span class="trust-badge rounded-full px-4 py-2 text-sm font-medium" style="color:var(--espresso);">✔ 無經驗可</span>
+  <div class="flex flex-wrap justify-center gap-3 mb-10 fade-in" style="transition-delay:0.3s;">
+    <span class="trust-badge rounded-full px-4 py-2 text-sm font-medium" style="color:var(--espresso);" aria-label="免押金">免押金</span>
+    <span class="trust-badge rounded-full px-4 py-2 text-sm font-medium" style="color:var(--espresso);" aria-label="彈性接案">彈性接案</span>
+    <span class="trust-badge rounded-full px-4 py-2 text-sm font-medium" style="color:var(--espresso);" aria-label="無經驗可">無經驗可</span>
+    <span class="trust-badge rounded-full px-4 py-2 text-sm font-medium" style="color:var(--espresso);" aria-label="每週匯款">每週匯款</span>
+  </div>
+
+  <!-- 名額進度條 -->
+  <div class="fade-in w-full max-w-sm mb-10" style="transition-delay:0.35s;">
+    <div style="background:var(--white);border-radius:16px;padding:18px 20px;box-shadow:0 4px 20px rgba(139,107,74,0.1);border:1px solid rgba(196,168,130,0.2);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <span style="font-size:0.82rem;font-weight:600;color:var(--dark-brown);">本月名額使用狀況</span>
+        <span style="font-size:0.78rem;color:var(--warm-gray);">48 / 60 已使用</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" aria-label="名額進度">
+        <div class="progress-fill" id="quotaBar" style="width:0%;"></div>
+      </div>
+      <p style="font-size:0.75rem;color:var(--accent);font-weight:600;margin-top:8px;text-align:right;">僅剩 12 個名額</p>
+    </div>
   </div>
 
   <div class="fade-in" style="transition-delay:0.45s;">
     <a href="#form" class="cta-btn" style="font-size:1.1rem;padding:18px 44px;">
-      👉 立即免費申請名額
+      立即免費申請名額
     </a>
-    <p class="mt-3" style="font-size:0.78rem;color:var(--warm-gray);">⚠ 名額有限，申請越早安排越快</p>
+    <p class="mt-3" style="font-size:0.78rem;color:var(--warm-gray);">申請完全免費・名額有限，越早申請越快安排</p>
   </div>
 
+  <!-- Hero visual card -->
   <div class="mt-14 fade-in w-full max-w-sm" style="transition-delay:0.55s;">
-    <div style="background:var(--white);border-radius:24px;padding:28px;box-shadow:0 16px 60px rgba(139,107,74,0.15);position:relative;">
-      <div style="background:var(--latte);border-radius:12px;padding:20px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;">
-        <div style="background:#F5E6D0;width:80px;height:100px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 12px rgba(0,0,0,0.08);">🕯️<div style="font-size:0.6rem;color:var(--espresso);margin-top:4px;">香氛蠟燭</div></div>
-        <div style="background:#EDE0D0;width:80px;height:100px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 12px rgba(0,0,0,0.08);">📦<div style="font-size:0.6rem;color:var(--espresso);margin-top:4px;">精品包裝</div></div>
-        <div style="background:#F0E5D5;width:80px;height:100px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 12px rgba(0,0,0,0.08);">✏️<div style="font-size:0.6rem;color:var(--espresso);margin-top:4px;">文具整理</div></div>
-      </div>
-      <div style="margin-top:16px;text-align:center;">
-        <div style="background:linear-gradient(135deg,var(--accent),var(--espresso));color:white;border-radius:8px;padding:10px 16px;font-size:0.85rem;font-weight:600;">
-          🎉 昨日已完成 <strong>1,240</strong> 件・已發放 NT$18,600
+    <div style="background:var(--white);border-radius:24px;padding:28px;box-shadow:0 16px 56px rgba(139,107,74,0.14);border:1px solid rgba(196,168,130,0.18);position:relative;">
+      <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--accent),var(--espresso));color:white;border-radius:20px;padding:5px 14px;font-size:0.72rem;font-weight:700;letter-spacing:0.08em;white-space:nowrap;">昨日已完成 1,240 件</div>
+      <div style="background:var(--latte);border-radius:14px;padding:20px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;margin-top:8px;">
+        <div style="background:var(--white);width:84px;height:104px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2.2rem;box-shadow:0 4px 14px rgba(0,0,0,0.07);" aria-label="香氛蠟燭包裝">
+          <span aria-hidden="true">🕯️</span>
+          <div style="font-size:0.6rem;color:var(--espresso);margin-top:6px;font-weight:600;">香氛蠟燭</div>
         </div>
+        <div style="background:var(--white);width:84px;height:104px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2.2rem;box-shadow:0 4px 14px rgba(0,0,0,0.07);" aria-label="精品包裝">
+          <span aria-hidden="true">📦</span>
+          <div style="font-size:0.6rem;color:var(--espresso);margin-top:6px;font-weight:600;">精品包裝</div>
+        </div>
+        <div style="background:var(--white);width:84px;height:104px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2.2rem;box-shadow:0 4px 14px rgba(0,0,0,0.07);" aria-label="文具整理">
+          <span aria-hidden="true">✏️</span>
+          <div style="font-size:0.6rem;color:var(--espresso);margin-top:6px;font-weight:600;">文具整理</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;background:linear-gradient(135deg,var(--accent),var(--espresso));color:white;border-radius:10px;padding:10px 16px;font-size:0.83rem;font-weight:600;text-align:center;">
+        昨日已發放 NT$18,600 報酬
       </div>
     </div>
   </div>
 </section>
+
+<!-- Wave -->
+<div class="wave-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:50px;">
+    <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#4A3728"/>
+  </svg>
+</div>
 
 <!-- ==================== 2. LIVE STATS ==================== -->
 <section class="px-5 py-14" style="background:var(--dark-brown);">
   <div class="max-w-2xl mx-auto">
-    <p class="text-center text-xs tracking-widest uppercase mb-8 fade-in" style="color:var(--mocha);">即時運作數據</p>
-    <div class="grid grid-cols-3 gap-4 fade-in">
-      <div class="text-center">
-        <div class="counter-val text-3xl font-bold mb-1" style="color:var(--latte);" id="c-members">532</div>
-        <div class="text-xs" style="color:var(--warm-gray);">已合作人數</div>
+    <p class="text-center section-label mb-2 fade-in" style="color:var(--mocha);">平台數據</p>
+    <h2 class="text-center text-2xl font-bold mb-2 fade-in" style="color:var(--latte);transition-delay:0.1s;">真實運作成果</h2>
+    <div class="deco-line fade-in mb-10" style="transition-delay:0.15s;"></div>
+
+    <div class="grid grid-cols-3 gap-4 fade-in" style="transition-delay:0.2s;">
+      <div class="stat-card">
+        <div aria-hidden="true" style="font-size:1.8rem;margin-bottom:8px;">👥</div>
+        <div class="counter-val text-3xl font-bold mb-2" style="color:var(--latte);" id="c-members">0</div>
+        <div style="font-size:0.8rem;color:var(--warm-gray);line-height:1.4;">累計<br>合作人數</div>
       </div>
-      <div class="text-center border-x" style="border-color:rgba(196,168,130,0.2);">
-        <div class="counter-val text-3xl font-bold mb-1" style="color:var(--accent);" id="c-today">0</div>
-        <div class="text-xs" style="color:var(--warm-gray);">今日完成件數</div>
+      <div class="stat-card" style="border-color:rgba(212,149,106,0.4);">
+        <div aria-hidden="true" style="font-size:1.8rem;margin-bottom:8px;">📦</div>
+        <div class="counter-val text-3xl font-bold mb-2" style="color:var(--accent);" id="c-today">0</div>
+        <div style="font-size:0.8rem;color:var(--warm-gray);line-height:1.4;">本週<br>完成件數</div>
       </div>
-      <div class="text-center">
-        <div class="counter-val text-3xl font-bold mb-1" style="color:var(--latte);" id="c-paid">NT$0</div>
-        <div class="text-xs" style="color:var(--warm-gray);">累計已發放</div>
+      <div class="stat-card">
+        <div aria-hidden="true" style="font-size:1.8rem;margin-bottom:8px;">💰</div>
+        <div class="counter-val text-3xl font-bold mb-2" style="color:var(--latte);" id="c-paid">NT$0</div>
+        <div style="font-size:0.8rem;color:var(--warm-gray);line-height:1.4;">累計<br>已發放報酬</div>
       </div>
     </div>
-    <p class="text-center mt-6 fade-in" style="font-size:0.78rem;color:var(--warm-gray);">
-      <span class="pulse-dot" style="background:#7DB87D;"></span> 平台運作中 · 每日實時更新
+    <p class="text-center mt-6 fade-in flex items-center justify-center gap-2" style="font-size:0.78rem;color:var(--warm-gray);transition-delay:0.3s;">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      平台運作中・每週更新
     </p>
   </div>
 </section>
 
+<!-- Wave -->
+<div class="wave-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:50px;">
+    <path d="M0,30 C360,0 1080,60 1440,30 L1440,0 L0,0 Z" fill="#4A3728"/>
+  </svg>
+</div>
+
 <!-- ==================== 3. WORK TYPES ==================== -->
-<section class="px-5 py-16" style="background:var(--light-gray);">
+<section id="work-types" class="px-5 py-16" style="background:var(--light-gray);">
   <div class="max-w-2xl mx-auto">
-    <p class="text-center text-xs tracking-widest uppercase mb-2 fade-in" style="color:var(--warm-gray);">工作類型</p>
-    <h2 class="text-center text-2xl font-bold mb-4 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">簡單到不行的工作內容</h2>
+    <p class="text-center section-label mb-2 fade-in" style="color:var(--warm-gray);">工作類型</p>
+    <h2 class="text-center text-2xl font-bold mb-2 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">簡單到不行的工作內容</h2>
+    <div class="deco-line fade-in mb-3" style="transition-delay:0.15s;"></div>
     <p class="text-center mb-10 fade-in" style="color:var(--warm-gray);font-size:0.95rem;transition-delay:0.2s;">不需技術，簡單重複動作，在家即可完成</p>
-    
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-3 fade-in" style="transition-delay:0.3s;">
-      <div class="hover-card" style="background:var(--white);border-radius:20px;padding:24px;text-align:center;box-shadow:0 4px 20px rgba(139,107,74,0.08);">
-        <div style="font-size:3rem;margin-bottom:12px;">🕯️</div>
-        <h3 style="font-size:1rem;font-weight:600;color:var(--dark-brown);margin-bottom:6px;">香氛蠟燭包裝</h3>
-        <p style="font-size:0.85rem;color:var(--warm-gray);line-height:1.6;">貼標籤、裝盒、封膜，全程不需工具</p>
-        <div style="margin-top:12px;background:var(--light-gray);border-radius:8px;padding:6px 12px;font-size:0.8rem;color:var(--espresso);font-weight:600;">單件 NT$3～8</div>
+
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-3 fade-in" style="transition-delay:0.25s;">
+      <div class="work-card hover-card">
+        <div class="work-icon" style="background:linear-gradient(135deg,#F5E6D0,#E8C9A0);" aria-hidden="true">🕯️</div>
+        <h3 style="font-size:1rem;font-weight:700;color:var(--dark-brown);margin-bottom:8px;">香氛蠟燭包裝</h3>
+        <p style="font-size:0.85rem;color:var(--warm-gray);line-height:1.7;">貼標籤、裝盒、封膜，全程不需工具，新手10分鐘上手</p>
+        <div class="price-tag">單件 NT$3 ～ 8</div>
       </div>
-      <div class="hover-card" style="background:var(--white);border-radius:20px;padding:24px;text-align:center;box-shadow:0 4px 20px rgba(139,107,74,0.08);">
-        <div style="font-size:3rem;margin-bottom:12px;">✏️</div>
-        <h3 style="font-size:1rem;font-weight:600;color:var(--dark-brown);margin-bottom:6px;">文具組合整理</h3>
-        <p style="font-size:0.85rem;color:var(--warm-gray);line-height:1.6;">文具組裝入袋、分類裝盒，輕鬆操作</p>
-        <div style="margin-top:12px;background:var(--light-gray);border-radius:8px;padding:6px 12px;font-size:0.8rem;color:var(--espresso);font-weight:600;">單件 NT$4～10</div>
+      <div class="work-card hover-card">
+        <div class="work-icon" style="background:linear-gradient(135deg,#E8F0E8,#C8E0C8);" aria-hidden="true">✏️</div>
+        <h3 style="font-size:1rem;font-weight:700;color:var(--dark-brown);margin-bottom:8px;">文具組合整理</h3>
+        <p style="font-size:0.85rem;color:var(--warm-gray);line-height:1.7;">文具組裝入袋、分類裝盒，輕鬆操作，邊看電視邊做</p>
+        <div class="price-tag">單件 NT$4 ～ 10</div>
       </div>
-      <div class="hover-card" style="background:var(--white);border-radius:20px;padding:24px;text-align:center;box-shadow:0 4px 20px rgba(139,107,74,0.08);">
-        <div style="font-size:3rem;margin-bottom:12px;">🎁</div>
-        <h3 style="font-size:1rem;font-weight:600;color:var(--dark-brown);margin-bottom:6px;">小物裝袋包裝</h3>
-        <p style="font-size:0.85rem;color:var(--warm-gray);line-height:1.6;">小禮品、飾品、生活小物分裝入袋</p>
-        <div style="margin-top:12px;background:var(--light-gray);border-radius:8px;padding:6px 12px;font-size:0.8rem;color:var(--espresso);font-weight:600;">單件 NT$2～6</div>
+      <div class="work-card hover-card">
+        <div class="work-icon" style="background:linear-gradient(135deg,#F0E8F5,#D8C0E8);" aria-hidden="true">🎁</div>
+        <h3 style="font-size:1rem;font-weight:700;color:var(--dark-brown);margin-bottom:8px;">小物裝袋包裝</h3>
+        <p style="font-size:0.85rem;color:var(--warm-gray);line-height:1.7;">小禮品、飾品、生活小物分裝入袋，速度快、件數多</p>
+        <div class="price-tag">單件 NT$2 ～ 6</div>
       </div>
     </div>
 
-    <div class="text-center mt-10 fade-in">
-      <a href="#form" class="cta-btn">👉 我想申請這份工作</a>
+    <div class="text-center mt-10 fade-in" style="transition-delay:0.35s;">
+      <a href="#form" class="cta-btn">我想申請這份工作</a>
     </div>
   </div>
 </section>
@@ -382,120 +786,141 @@
 <!-- ==================== 4. ADVANTAGES ==================== -->
 <section class="px-5 py-16" style="background:var(--cream);">
   <div class="max-w-2xl mx-auto">
-    <p class="text-center text-xs tracking-widest uppercase mb-2 fade-in" style="color:var(--warm-gray);">為什麼選我們</p>
-    <h2 class="text-center text-2xl font-bold mb-10 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">三大優勢，讓你安心接案</h2>
-    
+    <p class="text-center section-label mb-2 fade-in" style="color:var(--warm-gray);">為什麼選我們</p>
+    <h2 class="text-center text-2xl font-bold mb-2 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">三大優勢，讓你安心接案</h2>
+    <div class="deco-line fade-in mb-12" style="transition-delay:0.15s;"></div>
+
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 fade-in" style="transition-delay:0.2s;">
-      <div class="hover-card" style="background:var(--white);border-radius:20px;padding:28px;text-align:center;box-shadow:0 6px 28px rgba(139,107,74,0.1);">
-        <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--latte),var(--mocha));border-radius:16px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;">⏰</div>
+      <div class="adv-card hover-card">
+        <div class="adv-icon" aria-hidden="true">⏰</div>
         <h3 style="font-size:1.05rem;font-weight:700;color:var(--dark-brown);margin-bottom:8px;">彈性工時</h3>
-        <p style="font-size:0.88rem;color:var(--warm-gray);line-height:1.6;">自由安排時間，早晚隨你，帶孩子的媽媽也適合</p>
+        <p style="font-size:0.88rem;color:var(--warm-gray);line-height:1.7;">自由安排時間，早晚隨你，帶孩子的媽媽也適合</p>
       </div>
-      <div class="hover-card" style="background:var(--white);border-radius:20px;padding:28px;text-align:center;box-shadow:0 6px 28px rgba(139,107,74,0.1);">
-        <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--latte),var(--mocha));border-radius:16px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;">💰</div>
+      <div class="adv-card hover-card">
+        <div class="adv-icon" aria-hidden="true">💰</div>
         <h3 style="font-size:1.05rem;font-weight:700;color:var(--dark-brown);margin-bottom:8px;">論件計酬</h3>
-        <p style="font-size:0.88rem;color:var(--warm-gray);line-height:1.6;">做多少賺多少，沒有上限，多做多得</p>
+        <p style="font-size:0.88rem;color:var(--warm-gray);line-height:1.7;">做多少賺多少，沒有上限，多做多得，無最低要求</p>
       </div>
-      <div class="hover-card" style="background:var(--white);border-radius:20px;padding:28px;text-align:center;box-shadow:0 6px 28px rgba(139,107,74,0.1);">
-        <div style="width:56px;height:56px;background:linear-gradient(135deg,var(--latte),var(--mocha));border-radius:16px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;">🛡️</div>
+      <div class="adv-card hover-card">
+        <div class="adv-icon" aria-hidden="true">🛡️</div>
         <h3 style="font-size:1.05rem;font-weight:700;color:var(--dark-brown);margin-bottom:8px;">完全免押金</h3>
-        <p style="font-size:0.88rem;color:var(--warm-gray);line-height:1.6;">零成本開始，不收任何費用，安心嘗試</p>
+        <p style="font-size:0.88rem;color:var(--warm-gray);line-height:1.7;">零成本開始，不收任何費用，安心嘗試，隨時可退出</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ==================== 5. FLOW ==================== -->
-<section class="px-5 py-16" style="background:var(--latte);">
-  <div class="max-w-2xl mx-auto">
-    <p class="text-center text-xs tracking-widest uppercase mb-2 fade-in" style="color:var(--espresso);">接案流程</p>
-    <h2 class="text-center text-2xl font-bold mb-12 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">4步驟快速開始</h2>
+<!-- Wave -->
+<div class="wave-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:50px;">
+    <path d="M0,0 C360,50 1080,10 1440,40 L1440,60 L0,60 Z" fill="#E8D9C4"/>
+  </svg>
+</div>
 
-    <div class="grid grid-cols-2 gap-6 sm:grid-cols-4 fade-in" style="transition-delay:0.2s;">
-      <div class="text-center">
-        <div style="width:56px;height:56px;background:var(--espresso);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.4rem;box-shadow:0 8px 20px rgba(139,107,74,0.3);">📝</div>
-        <div style="font-size:0.7rem;color:var(--espresso);font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">STEP 1</div>
-        <div style="font-size:0.9rem;font-weight:600;color:var(--dark-brown);">填寫資料</div>
-        <div style="font-size:0.78rem;color:var(--warm-gray);margin-top:4px;">姓名＋聯絡方式</div>
+<!-- ==================== 5. FLOW ==================== -->
+<section id="flow" class="px-5 py-16" style="background:var(--latte);">
+  <div class="max-w-2xl mx-auto">
+    <p class="text-center section-label mb-2 fade-in" style="color:var(--espresso);">接案流程</p>
+    <h2 class="text-center text-2xl font-bold mb-2 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">4 步驟快速開始</h2>
+    <div class="deco-line fade-in mb-14" style="transition-delay:0.15s;"></div>
+
+    <div class="steps-grid fade-in" style="transition-delay:0.2s;">
+      <div class="step-item">
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step-circle" style="background:var(--espresso);" aria-label="步驟 1">
+          <span aria-hidden="true">📝</span>
+        </div>
+        <div style="font-size:0.68rem;color:var(--espresso);font-weight:700;letter-spacing:0.1em;margin-bottom:5px;">STEP 1</div>
+        <div style="font-size:0.92rem;font-weight:700;color:var(--dark-brown);">填寫資料</div>
+        <div style="font-size:0.78rem;color:var(--warm-gray);margin-top:5px;line-height:1.5;">姓名＋聯絡方式</div>
       </div>
-      <div class="text-center">
-        <div style="width:56px;height:56px;background:var(--espresso);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.4rem;box-shadow:0 8px 20px rgba(139,107,74,0.3);">📞</div>
-        <div style="font-size:0.7rem;color:var(--espresso);font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">STEP 2</div>
-        <div style="font-size:0.9rem;font-weight:600;color:var(--dark-brown);">專人聯繫</div>
-        <div style="font-size:0.78rem;color:var(--warm-gray);margin-top:4px;">24小時內回覆</div>
+      <div class="step-item">
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step-circle" style="background:var(--espresso);" aria-label="步驟 2">
+          <span aria-hidden="true">📞</span>
+        </div>
+        <div style="font-size:0.68rem;color:var(--espresso);font-weight:700;letter-spacing:0.1em;margin-bottom:5px;">STEP 2</div>
+        <div style="font-size:0.92rem;font-weight:700;color:var(--dark-brown);">專人聯繫</div>
+        <div style="font-size:0.78rem;color:var(--warm-gray);margin-top:5px;line-height:1.5;">24小時內回覆</div>
       </div>
-      <div class="text-center">
-        <div style="width:56px;height:56px;background:var(--espresso);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.4rem;box-shadow:0 8px 20px rgba(139,107,74,0.3);">🧪</div>
-        <div style="font-size:0.7rem;color:var(--espresso);font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">STEP 3</div>
-        <div style="font-size:0.9rem;font-weight:600;color:var(--dark-brown);">試作確認</div>
-        <div style="font-size:0.78rem;color:var(--warm-gray);margin-top:4px;">輕鬆上手試做</div>
+      <div class="step-item">
+        <div class="step-connector" aria-hidden="true"></div>
+        <div class="step-circle" style="background:var(--espresso);" aria-label="步驟 3">
+          <span aria-hidden="true">🧪</span>
+        </div>
+        <div style="font-size:0.68rem;color:var(--espresso);font-weight:700;letter-spacing:0.1em;margin-bottom:5px;">STEP 3</div>
+        <div style="font-size:0.92rem;font-weight:700;color:var(--dark-brown);">試作確認</div>
+        <div style="font-size:0.78rem;color:var(--warm-gray);margin-top:5px;line-height:1.5;">輕鬆上手試做</div>
       </div>
-      <div class="text-center">
-        <div style="width:56px;height:56px;background:var(--accent);border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;color:white;font-size:1.4rem;box-shadow:0 8px 20px rgba(212,149,106,0.4);">🚀</div>
-        <div style="font-size:0.7rem;color:var(--accent);font-weight:700;letter-spacing:0.08em;margin-bottom:4px;">STEP 4</div>
-        <div style="font-size:0.9rem;font-weight:600;color:var(--dark-brown);">開始接案</div>
-        <div style="font-size:0.78rem;color:var(--warm-gray);margin-top:4px;">開始賺取收入！</div>
+      <div class="step-item">
+        <div class="step-circle" style="background:var(--accent);" aria-label="步驟 4，最後一步">
+          <span aria-hidden="true">🚀</span>
+        </div>
+        <div style="font-size:0.68rem;color:var(--accent);font-weight:700;letter-spacing:0.1em;margin-bottom:5px;">STEP 4</div>
+        <div style="font-size:0.92rem;font-weight:700;color:var(--dark-brown);">開始接案</div>
+        <div style="font-size:0.78rem;color:var(--warm-gray);margin-top:5px;line-height:1.5;">開始賺取收入</div>
       </div>
     </div>
 
-    <div class="text-center mt-10 fade-in">
-      <a href="#form" class="cta-btn">立即填寫資料 →</a>
+    <div class="text-center mt-12 fade-in" style="transition-delay:0.4s;">
+      <a href="#form" class="cta-btn">立即填寫資料</a>
     </div>
   </div>
 </section>
 
 <!-- ==================== 6. TESTIMONIALS ==================== -->
-<section class="px-5 py-16" style="background:var(--cream);">
+<section id="testimonials" class="px-5 py-16" style="background:var(--cream);">
   <div class="max-w-2xl mx-auto">
-    <p class="text-center text-xs tracking-widest uppercase mb-2 fade-in" style="color:var(--warm-gray);">真實心得</p>
-    <h2 class="text-center text-2xl font-bold mb-10 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">她們這樣說</h2>
+    <p class="text-center section-label mb-2 fade-in" style="color:var(--warm-gray);">真實心得</p>
+    <h2 class="text-center text-2xl font-bold mb-2 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">夥伴們這樣說</h2>
+    <div class="deco-line fade-in mb-10" style="transition-delay:0.15s;"></div>
 
     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 fade-in" style="transition-delay:0.2s;">
       <div class="testimonial-card hover-card">
-        <p style="color:var(--dark-brown);font-size:0.9rem;line-height:1.8;padding-top:20px;">在家帶小孩的空檔就能做，一天大概做2小時，一個月多了將近四千塊。真的不誇張，比我想的容易！</p>
-        <div style="margin-top:16px;display:flex;align-items:center;gap:10px;">
-          <div style="width:36px;height:36px;background:var(--latte);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">👩</div>
-          <div>
-            <div style="font-size:0.85rem;font-weight:600;color:var(--dark-brown);">美玲 媽媽</div>
-            <div style="font-size:0.75rem;color:var(--warm-gray);">加入3個月 · 台中</div>
+        <p style="color:var(--dark-brown);font-size:0.9rem;line-height:1.85;padding-top:20px;">在家帶小孩的空檔就能做，一天大概做2小時，一個月多了將近四千塊。真的不誇張，比我想的容易！</p>
+        <div style="margin-top:18px;display:flex;align-items:center;gap:12px;">
+          <div class="avatar" aria-hidden="true">👩</div>
+          <div style="flex:1;">
+            <div style="font-size:0.88rem;font-weight:700;color:var(--dark-brown);">美玲</div>
+            <div style="font-size:0.75rem;color:var(--warm-gray);">加入3個月・台中</div>
           </div>
-          <div style="margin-left:auto;display:flex;gap:2px;">★★★★★</div>
+          <div class="stars" aria-label="五顆星好評">★★★★★</div>
         </div>
       </div>
 
       <div class="testimonial-card hover-card">
-        <p style="color:var(--dark-brown);font-size:0.9rem;line-height:1.8;padding-top:20px;">原本半信半疑，申請後隔天就有人聯繫了。材料配送到家，做完寄回就領錢，真的沒想到這麼順。</p>
-        <div style="margin-top:16px;display:flex;align-items:center;gap:10px;">
-          <div style="width:36px;height:36px;background:var(--latte);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">🙋</div>
-          <div>
-            <div style="font-size:0.85rem;font-weight:600;color:var(--dark-brown);">雅婷</div>
-            <div style="font-size:0.75rem;color:var(--warm-gray);">加入5個月 · 新北</div>
+        <p style="color:var(--dark-brown);font-size:0.9rem;line-height:1.85;padding-top:20px;">原本半信半疑，申請後隔天就有人聯繫了。材料配送到家，做完寄回就領錢，真的沒想到這麼順。</p>
+        <div style="margin-top:18px;display:flex;align-items:center;gap:12px;">
+          <div class="avatar" aria-hidden="true">🙋</div>
+          <div style="flex:1;">
+            <div style="font-size:0.88rem;font-weight:700;color:var(--dark-brown);">雅婷</div>
+            <div style="font-size:0.75rem;color:var(--warm-gray);">加入5個月・新北</div>
           </div>
-          <div style="margin-left:auto;display:flex;gap:2px;">★★★★★</div>
+          <div class="stars" aria-label="五顆星好評">★★★★★</div>
         </div>
       </div>
 
       <div class="testimonial-card hover-card">
-        <p style="color:var(--dark-brown);font-size:0.9rem;line-height:1.8;padding-top:20px;">退休後沒事做，現在每天下午做兩小時，當作運動也當作賺零用錢，很充實。推薦給一樣閒不住的朋友！</p>
-        <div style="margin-top:16px;display:flex;align-items:center;gap:10px;">
-          <div style="width:36px;height:36px;background:var(--latte);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">👴</div>
-          <div>
-            <div style="font-size:0.85rem;font-weight:600;color:var(--dark-brown);">文雄 先生</div>
-            <div style="font-size:0.75rem;color:var(--warm-gray);">加入2個月 · 高雄</div>
+        <p style="color:var(--dark-brown);font-size:0.9rem;line-height:1.85;padding-top:20px;">退休後沒事做，現在每天下午做兩小時，當作運動也當作賺零用錢，很充實。推薦給一樣閒不住的朋友！</p>
+        <div style="margin-top:18px;display:flex;align-items:center;gap:12px;">
+          <div class="avatar" aria-hidden="true">👴</div>
+          <div style="flex:1;">
+            <div style="font-size:0.88rem;font-weight:700;color:var(--dark-brown);">文雄先生</div>
+            <div style="font-size:0.75rem;color:var(--warm-gray);">加入2個月・高雄</div>
           </div>
-          <div style="margin-left:auto;display:flex;gap:2px;">★★★★☆</div>
+          <div class="stars" aria-label="四顆半星好評">★★★★☆</div>
         </div>
       </div>
 
       <div class="testimonial-card hover-card">
-        <p style="color:var(--dark-brown);font-size:0.9rem;line-height:1.8;padding-top:20px;">一直在找不需外出的工作，這個真的很適合。薪水每週匯款，速度很快。已經介紹給三個朋友了。</p>
-        <div style="margin-top:16px;display:flex;align-items:center;gap:10px;">
-          <div style="width:36px;height:36px;background:var(--latte);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">👩‍💻</div>
-          <div>
-            <div style="font-size:0.85rem;font-weight:600;color:var(--dark-brown);">欣怡</div>
-            <div style="font-size:0.75rem;color:var(--warm-gray);">加入7個月 · 桃園</div>
+        <p style="color:var(--dark-brown);font-size:0.9rem;line-height:1.85;padding-top:20px;">一直在找不需外出的工作，這個真的很適合。薪水每週匯款，速度很快。已經介紹給三個朋友了。</p>
+        <div style="margin-top:18px;display:flex;align-items:center;gap:12px;">
+          <div class="avatar" aria-hidden="true">👩‍💻</div>
+          <div style="flex:1;">
+            <div style="font-size:0.88rem;font-weight:700;color:var(--dark-brown);">欣怡</div>
+            <div style="font-size:0.75rem;color:var(--warm-gray);">加入7個月・桃園</div>
           </div>
-          <div style="margin-left:auto;display:flex;gap:2px;">★★★★★</div>
+          <div class="stars" aria-label="五顆星好評">★★★★★</div>
         </div>
       </div>
     </div>
@@ -505,117 +930,126 @@
 <!-- ==================== 7. CALCULATOR ==================== -->
 <section class="px-5 py-16" style="background:var(--dark-brown);">
   <div class="max-w-lg mx-auto">
-    <p class="text-center text-xs tracking-widest uppercase mb-2 fade-in" style="color:var(--mocha);">收入試算</p>
-    <h2 class="text-center text-2xl font-bold mb-3 fade-in" style="color:var(--latte);transition-delay:0.1s;">算算你可以賺多少？</h2>
-    <p class="text-center mb-10 fade-in" style="color:var(--warm-gray);font-size:0.88rem;transition-delay:0.2s;">拖動看看，讓數字說話</p>
+    <p class="text-center section-label mb-2 fade-in" style="color:var(--mocha);">收入試算</p>
+    <h2 class="text-center text-2xl font-bold mb-2 fade-in" style="color:var(--latte);transition-delay:0.1s;">算算你可以賺多少？</h2>
+    <div class="deco-line fade-in mb-10" style="transition-delay:0.15s;"></div>
 
-    <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(196,168,130,0.2);border-radius:24px;padding:28px;" class="fade-in">
+    <div class="calc-box fade-in" style="transition-delay:0.2s;">
       <div class="mb-6">
-        <label style="font-size:0.88rem;color:var(--mocha);display:block;margin-bottom:10px;font-weight:600;">
-          每日完成數量：<span id="qtyVal" style="color:var(--latte);font-size:1.1rem;font-weight:700;">50</span> 件
+        <label for="qtySlider" style="font-size:0.88rem;color:var(--mocha);display:block;margin-bottom:10px;font-weight:600;">
+          每日完成數量：<span id="qtyVal" style="color:var(--latte);font-size:1.15rem;font-weight:700;">50</span> 件
         </label>
         <input type="range" id="qtySlider" min="10" max="300" value="50"
-          style="width:100%;accent-color:var(--accent);height:6px;cursor:pointer;">
+          style="width:100%;accent-color:var(--accent);height:6px;cursor:pointer;"
+          aria-label="每日完成數量">
         <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--warm-gray);margin-top:4px;">
           <span>10件</span><span>300件</span>
         </div>
       </div>
 
       <div class="mb-8">
-        <label style="font-size:0.88rem;color:var(--mocha);display:block;margin-bottom:10px;font-weight:600;">
-          單件價格：NT$<span id="priceVal" style="color:var(--latte);font-size:1.1rem;font-weight:700;">5</span>
+        <label for="priceSlider" style="font-size:0.88rem;color:var(--mocha);display:block;margin-bottom:10px;font-weight:600;">
+          單件價格：NT$<span id="priceVal" style="color:var(--latte);font-size:1.15rem;font-weight:700;">5</span>
         </label>
         <input type="range" id="priceSlider" min="2" max="15" value="5"
-          style="width:100%;accent-color:var(--accent);height:6px;cursor:pointer;">
+          style="width:100%;accent-color:var(--accent);height:6px;cursor:pointer;"
+          aria-label="單件價格">
         <div style="display:flex;justify-content:space-between;font-size:0.72rem;color:var(--warm-gray);margin-top:4px;">
           <span>NT$2</span><span>NT$15</span>
         </div>
       </div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
-        <div style="background:rgba(196,168,130,0.12);border-radius:14px;padding:16px;text-align:center;">
+        <div class="result-card" style="background:rgba(196,168,130,0.1);border-radius:14px;">
           <div style="font-size:0.72rem;color:var(--warm-gray);margin-bottom:6px;">每日</div>
-          <div id="r-daily" style="font-size:1.3rem;font-weight:700;color:var(--latte);font-family:'Noto Serif TC',serif;">NT$250</div>
+          <div id="r-daily" style="font-size:1.3rem;font-weight:700;color:var(--latte);font-family:'Noto Serif TC',serif;" aria-live="polite">NT$250</div>
         </div>
-        <div style="background:rgba(212,149,106,0.15);border:1px solid rgba(212,149,106,0.3);border-radius:14px;padding:16px;text-align:center;">
+        <div class="result-card" style="background:rgba(212,149,106,0.14);border:1px solid rgba(212,149,106,0.3);border-radius:14px;">
           <div style="font-size:0.72rem;color:var(--mocha);margin-bottom:6px;">每週</div>
-          <div id="r-week" style="font-size:1.3rem;font-weight:700;color:var(--accent);font-family:'Noto Serif TC',serif;">NT$1,750</div>
+          <div id="r-week" style="font-size:1.3rem;font-weight:700;color:var(--accent);font-family:'Noto Serif TC',serif;" aria-live="polite">NT$1,750</div>
         </div>
-        <div style="background:rgba(196,168,130,0.12);border-radius:14px;padding:16px;text-align:center;">
+        <div class="result-card" style="background:rgba(196,168,130,0.1);border-radius:14px;">
           <div style="font-size:0.72rem;color:var(--warm-gray);margin-bottom:6px;">每月</div>
-          <div id="r-month" style="font-size:1.3rem;font-weight:700;color:var(--latte);font-family:'Noto Serif TC',serif;">NT$7,500</div>
+          <div id="r-month" style="font-size:1.3rem;font-weight:700;color:var(--latte);font-family:'Noto Serif TC',serif;" aria-live="polite">NT$7,500</div>
         </div>
       </div>
-
-      <p style="font-size:0.72rem;color:var(--warm-gray);text-align:center;margin-top:12px;">* 試算僅供參考，實際依接案量與件價而定</p>
+      <p style="font-size:0.72rem;color:var(--warm-gray);text-align:center;margin-top:12px;">試算僅供參考，實際依接案量與件價而定</p>
     </div>
 
-    <div class="text-center mt-8 fade-in">
-      <a href="#form" class="cta-btn">💰 現在申請，開始賺取收入</a>
+    <div class="text-center mt-8 fade-in" style="transition-delay:0.4s;">
+      <a href="#form" class="cta-btn">現在申請，開始賺取收入</a>
     </div>
   </div>
 </section>
 
+<!-- Wave -->
+<div class="wave-divider" aria-hidden="true">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="height:50px;">
+    <path d="M0,40 C360,10 1080,55 1440,20 L1440,0 L0,0 Z" fill="#4A3728"/>
+  </svg>
+</div>
+
 <!-- ==================== 8. FAQ ==================== -->
-<section class="px-5 py-16" style="background:var(--light-gray);">
+<section id="faq" class="px-5 py-16" style="background:var(--light-gray);">
   <div class="max-w-xl mx-auto">
-    <p class="text-center text-xs tracking-widest uppercase mb-2 fade-in" style="color:var(--warm-gray);">常見問題</p>
-    <h2 class="text-center text-2xl font-bold mb-10 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">你可能想問的問題</h2>
-    
+    <p class="text-center section-label mb-2 fade-in" style="color:var(--warm-gray);">常見問題</p>
+    <h2 class="text-center text-2xl font-bold mb-2 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">你可能想問的問題</h2>
+    <div class="deco-line fade-in mb-10" style="transition-delay:0.15s;"></div>
+
     <div class="space-y-3 fade-in" style="transition-delay:0.2s;">
-      <details class="faq-item" style="background:var(--white);border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(139,107,74,0.07);">
-        <summary style="display:flex;justify-content:space-between;align-items:center;">
+      <details class="faq-item">
+        <summary>
           <span style="font-weight:600;color:var(--dark-brown);">需要支付任何費用嗎？</span>
-          <span class="faq-icon" style="color:var(--mocha);font-size:1.2rem;">+</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <p style="margin-top:12px;color:var(--warm-gray);font-size:0.9rem;line-height:1.7;">
-          <strong style="color:#7DB87D;">完全不需要。</strong>我們採用零押金制度，報名、試作、接案全程 <strong>0元費用</strong>。任何要求你付款的聯絡都不是我們的官方管道。
+        <p style="margin-top:12px;color:var(--warm-gray);font-size:0.9rem;line-height:1.75;">
+          <strong style="color:var(--green);">完全不需要。</strong>我們採用零押金制度，報名、試作、接案全程 <strong>0元費用</strong>。任何要求你付款的聯絡都不是我們的官方管道。
         </p>
       </details>
 
-      <details class="faq-item" style="background:var(--white);border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(139,107,74,0.07);">
-        <summary style="display:flex;justify-content:space-between;align-items:center;">
+      <details class="faq-item">
+        <summary>
           <span style="font-weight:600;color:var(--dark-brown);">完全沒有經驗可以嗎？</span>
-          <span class="faq-icon" style="color:var(--mocha);font-size:1.2rem;">+</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <p style="margin-top:12px;color:var(--warm-gray);font-size:0.9rem;line-height:1.7;">
+        <p style="margin-top:12px;color:var(--warm-gray);font-size:0.9rem;line-height:1.75;">
           完全可以！工作內容以<strong style="color:var(--espresso);">簡單重複的手工包裝</strong>為主，我們會提供詳細的教學說明。試作階段也會有專人指導，讓你輕鬆上手。
         </p>
       </details>
 
-      <details class="faq-item" style="background:var(--white);border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(139,107,74,0.07);">
-        <summary style="display:flex;justify-content:space-between;align-items:center;">
+      <details class="faq-item">
+        <summary>
           <span style="font-weight:600;color:var(--dark-brown);">報酬怎麼發放、什麼時候領？</span>
-          <span class="faq-icon" style="color:var(--mocha);font-size:1.2rem;">+</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <p style="margin-top:12px;color:var(--warm-gray);font-size:0.9rem;line-height:1.7;">
+        <p style="margin-top:12px;color:var(--warm-gray);font-size:0.9rem;line-height:1.75;">
           採<strong style="color:var(--espresso);">每週銀行匯款</strong>，每週五結算上週工作量，下週一入帳。不需等到月底，讓你隨時看到成果。
         </p>
       </details>
 
-      <details class="faq-item" style="background:var(--white);border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(139,107,74,0.07);">
-        <summary style="display:flex;justify-content:space-between;align-items:center;">
+      <details class="faq-item">
+        <summary>
           <span style="font-weight:600;color:var(--dark-brown);">每天需要花多少時間？</span>
-          <span class="faq-icon" style="color:var(--mocha);font-size:1.2rem;">+</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <p style="margin-top:12px;color:var(--warm-gray);font-size:0.9rem;line-height:1.7;">
+        <p style="margin-top:12px;color:var(--warm-gray);font-size:0.9rem;line-height:1.75;">
           完全彈性，<strong style="color:var(--espresso);">你決定工時</strong>。很多夥伴每天只做1～2小時，利用帶孩子的空檔或看電視時順便做。沒有最低要求。
         </p>
       </details>
 
-      <details class="faq-item" style="background:var(--white);border-radius:14px;padding:18px 20px;box-shadow:0 2px 10px rgba(139,107,74,0.07);">
-        <summary style="display:flex;justify-content:space-between;align-items:center;">
+      <details class="faq-item">
+        <summary>
           <span style="font-weight:600;color:var(--dark-brown);">材料怎麼拿、成品怎麼交？</span>
-          <span class="faq-icon" style="color:var(--mocha);font-size:1.2rem;">+</span>
+          <span class="faq-icon" aria-hidden="true">+</span>
         </summary>
-        <p style="margin-top:12px;color:var(--warm-gray);font-size:0.9rem;line-height:1.7;">
+        <p style="margin-top:12px;color:var(--warm-gray);font-size:0.9rem;line-height:1.75;">
           我們安排<strong style="color:var(--espresso);">宅配到府</strong>，完成後以寄件方式交回即可，全程不需外出，真正的居家接案體驗。
         </p>
       </details>
     </div>
 
-    <div class="text-center mt-10 fade-in">
-      <a href="#form" class="cta-btn-outline">還有其他問題？立即諮詢 →</a>
+    <div class="text-center mt-10 fade-in" style="transition-delay:0.4s;">
+      <a href="#form" class="cta-btn-outline">還有其他問題？立即諮詢</a>
     </div>
   </div>
 </section>
@@ -623,25 +1057,25 @@
 <!-- ==================== 9. ANTI-SCAM ==================== -->
 <section class="px-5 py-12" style="background:var(--dark-brown);">
   <div class="max-w-xl mx-auto fade-in">
-    <div style="background:rgba(255,255,255,0.06);border:2px solid rgba(125,184,125,0.4);border-radius:20px;padding:28px;text-align:center;">
-      <div style="font-size:2.5rem;margin-bottom:12px;">🛡️</div>
-      <h3 style="font-family:'Noto Serif TC',serif;font-size:1.2rem;font-weight:700;color:#A8E6A8;margin-bottom:16px;">防詐騙聲明</h3>
-      <div class="space-y-3 text-left">
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <span style="color:#7DB87D;font-size:1.1rem;flex-shrink:0;">✅</span>
-          <p style="color:var(--latte);font-size:0.88rem;line-height:1.6;"><strong>絕不收取任何費用</strong>——報名、試作、接案全程 0 元，任何要求付款的都是詐騙。</p>
+    <div class="antiscam-card">
+      <div style="font-size:2.5rem;margin-bottom:14px;" aria-hidden="true">🛡️</div>
+      <h3 style="font-family:'Noto Serif TC',serif;font-size:1.25rem;font-weight:700;color:#A8E6A8;margin-bottom:18px;">防詐騙聲明</h3>
+      <div style="display:flex;flex-direction:column;gap:14px;text-align:left;">
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <span style="color:var(--green);font-size:1.1rem;flex-shrink:0;" aria-hidden="true">✅</span>
+          <p style="color:var(--latte);font-size:0.88rem;line-height:1.7;"><strong>絕不收取任何費用</strong>——報名、試作、接案全程 0 元，任何要求付款的都是詐騙。</p>
         </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <span style="color:#7DB87D;font-size:1.1rem;flex-shrink:0;">✅</span>
-          <p style="color:var(--latte);font-size:0.88rem;line-height:1.6;"><strong>無押金制度</strong>——我們不需要也不會要求任何形式的押金或保證金。</p>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <span style="color:var(--green);font-size:1.1rem;flex-shrink:0;" aria-hidden="true">✅</span>
+          <p style="color:var(--latte);font-size:0.88rem;line-height:1.7;"><strong>無押金制度</strong>——我們不需要也不會要求任何形式的押金或保證金。</p>
         </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <span style="color:#7DB87D;font-size:1.1rem;flex-shrink:0;">✅</span>
-          <p style="color:var(--latte);font-size:0.88rem;line-height:1.6;"><strong>官方唯一聯繫窗口</strong>——本網站表單及官方LINE，其他管道均非本平台。</p>
+        <div style="display:flex;gap:12px;align-items:flex-start;">
+          <span style="color:var(--green);font-size:1.1rem;flex-shrink:0;" aria-hidden="true">✅</span>
+          <p style="color:var(--latte);font-size:0.88rem;line-height:1.7;"><strong>官方唯一聯繫窗口</strong>——本網站表單及官方LINE（@handiwork）其他管道均非本平台。</p>
         </div>
       </div>
-      <div style="margin-top:16px;padding:10px 16px;background:rgba(125,184,125,0.1);border-radius:10px;">
-        <p style="color:var(--warm-gray);font-size:0.78rem;">遇到可疑情況請立即停止並向消費者保護委員會反映</p>
+      <div style="margin-top:18px;padding:10px 16px;background:rgba(90,158,111,0.12);border-radius:10px;border:1px solid rgba(90,158,111,0.2);">
+        <p style="color:var(--warm-gray);font-size:0.78rem;">遇到可疑情況請立即停止並向消費者保護委員會（02-3516-3100）反映</p>
       </div>
     </div>
   </div>
@@ -650,20 +1084,16 @@
 <!-- ==================== 10. FINAL CTA ==================== -->
 <section class="px-5 py-16" style="background:linear-gradient(135deg,var(--espresso),var(--dark-brown));">
   <div class="max-w-xl mx-auto text-center fade-in">
-    <div style="font-size:2.8rem;margin-bottom:16px;">🎯</div>
-    <h2 style="font-family:'Noto Serif TC',serif;font-size:1.9rem;font-weight:700;color:var(--latte);margin-bottom:12px;line-height:1.3;">
+    <div style="font-size:2.8rem;margin-bottom:16px;" aria-hidden="true">🎯</div>
+    <h2 style="font-family:'Noto Serif TC',serif;font-size:1.9rem;font-weight:700;color:var(--latte);margin-bottom:12px;line-height:1.4;">
       名額有限<br>現在申請優先安排
     </h2>
-    <p style="color:var(--mocha);margin-bottom:28px;font-size:0.95rem;line-height:1.7;">
-      超過 532 位夥伴已開始賺取收入<br>今天就是你開始的最佳時機
+    <p style="color:var(--mocha);margin-bottom:32px;font-size:0.95rem;line-height:1.8;">
+      超過 500 位夥伴已開始賺取收入<br>今天就是你開始的最佳時機
     </p>
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="#form" class="cta-btn" style="font-size:1.05rem;">👉 立即申請名額</a>
-      <a href="https://line.me" target="_blank" class="cta-btn-outline" style="border-color:var(--latte);color:var(--latte);">💬 加LINE諮詢</a>
-    </div>
-    <div class="flex items-center justify-center gap-2 mt-6">
-      <span class="pulse-dot"></span>
-      <p style="font-size:0.78rem;color:var(--warm-gray);">目前有 <strong style="color:var(--latte);">18</strong> 人正在瀏覽此頁面</p>
+      <a href="#form" class="cta-btn" style="font-size:1.05rem;">立即申請名額</a>
+      <a href="https://line.me/ti/p/@handiwork" target="_blank" rel="noopener noreferrer" class="cta-btn-outline" style="border-color:var(--latte);color:var(--latte);">加LINE諮詢</a>
     </div>
   </div>
 </section>
@@ -671,109 +1101,203 @@
 <!-- ==================== 11. FORM ==================== -->
 <section id="form" class="px-5 py-16" style="background:var(--cream);">
   <div class="max-w-md mx-auto">
-    <p class="text-center text-xs tracking-widest uppercase mb-2 fade-in" style="color:var(--warm-gray);">立即申請</p>
-    <h2 class="text-center text-2xl font-bold mb-3 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">免費申請接案名額</h2>
+    <p class="text-center section-label mb-2 fade-in" style="color:var(--warm-gray);">立即申請</p>
+    <h2 class="text-center text-2xl font-bold mb-2 fade-in" style="color:var(--dark-brown);transition-delay:0.1s;">免費申請接案名額</h2>
+    <div class="deco-line fade-in mb-3" style="transition-delay:0.15s;"></div>
     <p class="text-center mb-8 fade-in" style="color:var(--warm-gray);font-size:0.88rem;transition-delay:0.2s;">填寫完成後，我們將在 <strong>24小時內</strong> 主動聯繫你</p>
-    
-    <div id="formCard" style="background:var(--white);border-radius:24px;padding:32px;box-shadow:0 12px 50px rgba(139,107,74,0.12);" class="fade-in">
+
+    <div id="formCard" style="background:var(--white);border-radius:24px;padding:32px;box-shadow:0 12px 50px rgba(139,107,74,0.12);border:1px solid rgba(196,168,130,0.15);" class="fade-in" style="transition-delay:0.25s;">
+
+      <!-- 姓名 -->
       <div class="mb-5">
-        <label style="font-size:0.85rem;font-weight:600;color:var(--dark-brown);display:block;margin-bottom:8px;">
-          姓名 <span style="color:var(--accent);">*</span>
+        <label for="inputName" style="font-size:0.85rem;font-weight:600;color:var(--dark-brown);display:block;margin-bottom:8px;">
+          姓名 <span style="color:var(--accent);" aria-hidden="true">*</span>
         </label>
-        <input type="text" id="inputName" class="form-input" placeholder="請輸入您的真實姓名">
-        <p id="nameErr" style="font-size:0.75rem;color:#E07070;margin-top:4px;display:none;">請輸入姓名</p>
+        <input type="text" id="inputName" class="form-input" placeholder="請輸入您的真實姓名" autocomplete="name" aria-required="true" aria-describedby="nameErr">
+        <p id="nameErr" role="alert" style="font-size:0.75rem;color:#E07070;margin-top:5px;display:none;">請輸入您的姓名</p>
       </div>
 
-      <div class="mb-6">
+      <!-- 聯繫方式 -->
+      <div class="mb-5">
         <label style="font-size:0.85rem;font-weight:600;color:var(--dark-brown);display:block;margin-bottom:8px;">
-          聯繫方式 <span style="color:var(--accent);">*</span>
+          聯繫方式 <span style="color:var(--accent);" aria-hidden="true">*</span>
         </label>
-        <input type="text" id="inputContact" class="form-input" placeholder="手機號碼或LINE ID">
-        <p id="contactErr" style="font-size:0.75rem;color:#E07070;margin-top:4px;display:none;">請輸入聯繫方式</p>
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.85rem;color:var(--dark-brown);">
+            <input type="radio" name="contactType" value="phone" id="radioPhone" checked style="accent-color:var(--espresso);">
+            手機號碼
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:0.85rem;color:var(--dark-brown);">
+            <input type="radio" name="contactType" value="line" id="radioLine" style="accent-color:var(--espresso);">
+            LINE ID
+          </label>
+        </div>
+        <input type="text" id="inputContact" class="form-input" placeholder="09XX-XXX-XXX" autocomplete="tel" aria-required="true" aria-describedby="contactErr" inputmode="tel">
+        <p id="contactErr" role="alert" style="font-size:0.75rem;color:#E07070;margin-top:5px;display:none;">請輸入正確的聯繫方式</p>
+      </div>
+
+      <!-- 地區 -->
+      <div class="mb-6">
+        <label for="inputRegion" style="font-size:0.85rem;font-weight:600;color:var(--dark-brown);display:block;margin-bottom:8px;">
+          所在縣市 <span style="color:var(--accent);" aria-hidden="true">*</span>
+        </label>
+        <select id="inputRegion" class="form-select" aria-required="true" aria-describedby="regionErr">
+          <option value="">請選擇縣市</option>
+          <option value="台北市">台北市</option>
+          <option value="新北市">新北市</option>
+          <option value="基隆市">基隆市</option>
+          <option value="桃園市">桃園市</option>
+          <option value="新竹市">新竹市</option>
+          <option value="新竹縣">新竹縣</option>
+          <option value="苗栗縣">苗栗縣</option>
+          <option value="台中市">台中市</option>
+          <option value="彰化縣">彰化縣</option>
+          <option value="南投縣">南投縣</option>
+          <option value="雲林縣">雲林縣</option>
+          <option value="嘉義市">嘉義市</option>
+          <option value="嘉義縣">嘉義縣</option>
+          <option value="台南市">台南市</option>
+          <option value="高雄市">高雄市</option>
+          <option value="屏東縣">屏東縣</option>
+          <option value="宜蘭縣">宜蘭縣</option>
+          <option value="花蓮縣">花蓮縣</option>
+          <option value="台東縣">台東縣</option>
+          <option value="澎湖縣">澎湖縣</option>
+          <option value="金門縣">金門縣</option>
+          <option value="連江縣">連江縣</option>
+        </select>
+        <p id="regionErr" role="alert" style="font-size:0.75rem;color:#E07070;margin-top:5px;display:none;">請選擇所在縣市</p>
       </div>
 
       <p style="font-size:0.75rem;color:var(--warm-gray);margin-bottom:20px;text-align:center;">
-        🔒 您的資料受到保護，僅用於接案聯繫，不會外流
+        <span aria-hidden="true">🔒</span> 您的資料受到保護，僅用於接案聯繫，不會外流
       </p>
 
-      <button id="submitBtn" onclick="submitForm()" class="cta-btn" style="width:100%;font-size:1.05rem;padding:18px;">
-        🎯 立即免費申請名額
+      <button id="submitBtn" onclick="submitForm()" class="cta-btn" style="width:100%;font-size:1.05rem;padding:18px;" aria-label="立即免費申請名額">
+        立即免費申請名額
       </button>
     </div>
 
-    <div id="successCard" style="display:none;background:var(--white);border-radius:24px;padding:40px;box-shadow:0 12px 50px rgba(139,107,74,0.12);text-align:center;">
-      <div style="font-size:3.5rem;margin-bottom:16px;">🎉</div>
+    <!-- Success -->
+    <div id="successCard" style="display:none;background:var(--white);border-radius:24px;padding:40px;box-shadow:0 12px 50px rgba(139,107,74,0.12);text-align:center;border:1px solid rgba(90,158,111,0.3);" role="alert" aria-live="polite">
+      <div style="font-size:3.5rem;margin-bottom:16px;" aria-hidden="true">🎉</div>
       <h3 style="font-family:'Noto Serif TC',serif;font-size:1.5rem;font-weight:700;color:var(--dark-brown);margin-bottom:10px;">申請成功！</h3>
-      <p style="color:var(--warm-gray);font-size:0.92rem;line-height:1.7;margin-bottom:20px;">感謝您的申請，我們的專員將在 <strong style="color:var(--espresso);">24小時內</strong> 主動聯繫您，請保持手機暢通。</p>
-      <div style="background:var(--light-gray);border-radius:12px;padding:14px;">
-        <p style="font-size:0.82rem;color:var(--warm-gray);">如有緊急問題，也可直接加入官方LINE洽詢</p>
-        <a href="https://line.me" target="_blank" style="color:var(--accent);font-weight:600;font-size:0.88rem;">💬 加入官方LINE →</a>
+      <p style="color:var(--warm-gray);font-size:0.92rem;line-height:1.75;margin-bottom:20px;">感謝您的申請，我們的專員將在 <strong style="color:var(--espresso);">24小時內</strong> 主動聯繫您，請保持手機暢通。</p>
+      <div style="background:var(--light-gray);border-radius:12px;padding:14px;border:1px solid rgba(196,168,130,0.2);">
+        <p style="font-size:0.82rem;color:var(--warm-gray);margin-bottom:8px;">如有緊急問題，也可直接加入官方LINE洽詢</p>
+        <a href="https://line.me/ti/p/@handiwork" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600;font-size:0.88rem;">加入官方LINE @handiwork</a>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ==================== FOOTER ==================== -->
-<footer style="background:var(--dark-brown);padding:28px 20px;text-align:center;">
-  <p style="color:var(--warm-gray);font-size:0.78rem;">© 2024 手作生活工坊 ・ 居家接案平台 ・ 保留一切權利</p>
-  <p style="color:rgba(158,146,137,0.6);font-size:0.72rem;margin-top:6px;">本平台採零押金制度，不收取任何費用</p>
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <!-- Brand -->
+    <div>
+      <div class="footer-logo">
+        <div class="footer-logo-icon" aria-hidden="true">🏠</div>
+        <span>手作生活工坊</span>
+      </div>
+      <p style="color:var(--warm-gray);font-size:0.82rem;line-height:1.7;">台灣居家手工代工接案平台，零押金、彈性工時，讓每個人都能在家穩定賺取收入。</p>
+    </div>
+
+    <!-- Links -->
+    <div>
+      <h4 style="color:var(--latte);font-size:0.85rem;font-weight:700;margin-bottom:12px;letter-spacing:0.06em;">快速連結</h4>
+      <nav aria-label="頁尾導覽">
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+          <li><a href="#work-types" style="color:var(--warm-gray);font-size:0.82rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--latte)'" onmouseout="this.style.color='var(--warm-gray)'">工作類型</a></li>
+          <li><a href="#flow" style="color:var(--warm-gray);font-size:0.82rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--latte)'" onmouseout="this.style.color='var(--warm-gray)'">接案流程</a></li>
+          <li><a href="#testimonials" style="color:var(--warm-gray);font-size:0.82rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--latte)'" onmouseout="this.style.color='var(--warm-gray)'">真實心得</a></li>
+          <li><a href="#faq" style="color:var(--warm-gray);font-size:0.82rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--latte)'" onmouseout="this.style.color='var(--warm-gray)'">常見問題</a></li>
+          <li><a href="#form" style="color:var(--warm-gray);font-size:0.82rem;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--latte)'" onmouseout="this.style.color='var(--warm-gray)'">立即申請</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <h4 style="color:var(--latte);font-size:0.85rem;font-weight:700;margin-bottom:12px;letter-spacing:0.06em;">聯繫我們</h4>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a href="https://line.me/ti/p/@handiwork" target="_blank" rel="noopener noreferrer"
+          style="display:flex;align-items:center;gap:8px;color:var(--warm-gray);font-size:0.82rem;text-decoration:none;"
+          aria-label="加入官方LINE @handiwork">
+          <span style="background:#00B900;color:white;border-radius:6px;padding:2px 8px;font-size:0.7rem;font-weight:700;flex-shrink:0;">LINE</span>
+          @handiwork
+        </a>
+        <p style="color:var(--warm-gray);font-size:0.8rem;line-height:1.6;">服務時間：週一至週五<br>09:00 ～ 18:00</p>
+        <div style="margin-top:6px;padding:10px;background:rgba(255,255,255,0.06);border-radius:10px;text-align:center;">
+          <!-- LINE QR Code placeholder -->
+          <div style="width:80px;height:80px;background:#00B900;border-radius:8px;margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:2rem;" aria-label="LINE QR Code">
+            <span aria-hidden="true">💬</span>
+          </div>
+          <p style="color:var(--warm-gray);font-size:0.68rem;margin-top:6px;">掃碼加入官方LINE</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top:1px solid rgba(196,168,130,0.15);padding-top:20px;max-width:800px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+    <p style="color:rgba(158,146,137,0.7);font-size:0.75rem;">© 2025 手作生活工坊・居家接案平台・保留一切權利</p>
+    <p style="color:rgba(158,146,137,0.5);font-size:0.72rem;">本平台採零押金制度，不收取任何費用</p>
+  </div>
 </footer>
 
 <!-- ==================== HIDDEN PAGE ==================== -->
-<div id="hiddenPage">
+<div id="hiddenPage" role="dialog" aria-modal="true" aria-label="秘密基地">
   <div style="max-width:700px;margin:0 auto;padding:0 16px 40px;">
     <div style="position:sticky;top:0;background:#1a1210;border-bottom:1px solid rgba(139,107,74,0.3);padding:16px 0;z-index:10;">
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <div>
           <span style="color:var(--mocha);font-weight:700;font-size:1rem;font-family:'Noto Serif TC',serif;">🌙 手作秘密基地</span>
-          <span style="font-size:0.7rem;color:#555;margin-left:8px;" id="hiddenTime">--:--:--</span>
+          <span style="font-size:0.7rem;color:#555;margin-left:8px;" id="hiddenTime" aria-live="polite">--:--:--</span>
         </div>
-        <button onclick="closeHidden()" style="background:rgba(196,168,130,0.15);border:1px solid rgba(196,168,130,0.3);color:var(--mocha);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:0.82rem;font-family:'Noto Sans TC',sans-serif;">✕ 離開</button>
+        <button onclick="closeHidden()" style="background:rgba(196,168,130,0.15);border:1px solid rgba(196,168,130,0.3);color:var(--mocha);border-radius:8px;padding:6px 14px;cursor:pointer;font-size:0.82rem;font-family:'Noto Sans TC',sans-serif;" aria-label="離開秘密基地">✕ 離開</button>
       </div>
-      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+      <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;" aria-label="在線成員">
         <span style="font-size:0.72rem;color:#666;">在線成員：</span>
-        <span class="badge badge-admin">管理員 · 小雪</span>
-        <span class="badge badge-mod">老手 · 阿旺</span>
-        <span class="badge badge-new">新人 · 你</span>
+        <span class="badge badge-admin">管理員・小雪</span>
+        <span class="badge badge-mod">老手・阿旺</span>
+        <span class="badge badge-new">新人・你</span>
         <span id="adminBadgeArea" class="badge badge-admin" style="display:none;">👑 你（管理者）</span>
       </div>
     </div>
 
-    <!-- Password gate -->
     <div id="pwGate" style="padding:60px 20px;text-align:center;">
-      <div style="font-size:2.5rem;margin-bottom:20px;">🔐</div>
+      <div style="font-size:2.5rem;margin-bottom:20px;" aria-hidden="true">🔐</div>
       <h3 style="color:var(--latte);font-family:'Noto Serif TC',serif;font-size:1.3rem;margin-bottom:8px;">歡迎來到秘密基地</h3>
       <p style="color:#666;font-size:0.85rem;margin-bottom:24px;">請輸入通關密碼進入留言板</p>
-      <input type="password" id="hiddenPw" placeholder="密碼..." 
+      <input type="password" id="hiddenPw" placeholder="密碼..."
         style="background:#2a1f1a;border:2px solid rgba(196,168,130,0.3);color:var(--latte);border-radius:10px;padding:12px 18px;font-size:1rem;text-align:center;width:200px;outline:none;font-family:'Noto Sans TC',sans-serif;"
-        onkeydown="if(event.key==='Enter')checkPw()">
+        onkeydown="if(event.key==='Enter')checkPw()"
+        aria-label="秘密基地密碼">
       <br>
-      <button onclick="checkPw()" style="margin-top:12px;background:var(--espresso);color:var(--latte);border:none;border-radius:10px;padding:10px 28px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;font-size:0.9rem;">進入 →</button>
-      <p id="pwErr" style="color:#E07070;font-size:0.8rem;margin-top:8px;display:none;">密碼錯誤，請重試</p>
-      <p style="color:rgba(196,168,130,0.3);font-size:0.7rem;margin-top:20px;">⌨ 提示：知道密碼的人才能看到留言</p>
+      <button onclick="checkPw()" style="margin-top:12px;background:var(--espresso);color:var(--latte);border:none;border-radius:10px;padding:10px 28px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;font-size:0.9rem;">進入</button>
+      <p id="pwErr" role="alert" style="color:#E07070;font-size:0.8rem;margin-top:8px;display:none;">密碼錯誤，請重試</p>
+      <p style="color:rgba(196,168,130,0.3);font-size:0.7rem;margin-top:20px;">知道密碼的人才能看到留言</p>
     </div>
 
-    <!-- Board area -->
     <div id="boardArea" style="display:none;">
-      <div id="msgList" style="padding:20px 0;min-height:300px;display:flex;flex-direction:column;gap:16px;">
-        <!-- Firebase 留言會動態載入到這裡 -->
+      <div id="msgList" style="padding:20px 0;min-height:300px;display:flex;flex-direction:column;gap:16px;" role="log" aria-live="polite" aria-label="留言列表">
         <div style="text-align:center;color:#555;font-size:0.85rem;padding:40px 0;">載入留言中...</div>
       </div>
-
-      <!-- Input area -->
       <div style="position:sticky;bottom:0;background:#1a1210;border-top:1px solid rgba(139,107,74,0.2);padding:16px 0;">
         <div style="margin-bottom:10px;">
           <input type="text" id="boardNick" placeholder="你的暱稱" maxlength="12"
-            style="background:#2a1f1a;border:1px solid rgba(196,168,130,0.25);color:var(--latte);border-radius:8px;padding:8px 12px;font-size:0.85rem;width:130px;outline:none;font-family:'Noto Sans TC',sans-serif;margin-right:6px;">
-          <select id="boardRole" style="background:#2a1f1a;border:1px solid rgba(196,168,130,0.25);color:var(--mocha);border-radius:8px;padding:8px 10px;font-size:0.82rem;outline:none;font-family:'Noto Sans TC',sans-serif;">
-            <option value="new">🌱 新人</option>
-            <option value="pro">⭐ 老手</option>
+            style="background:#2a1f1a;border:1px solid rgba(196,168,130,0.25);color:var(--latte);border-radius:8px;padding:8px 12px;font-size:0.85rem;width:130px;outline:none;font-family:'Noto Sans TC',sans-serif;margin-right:6px;"
+            aria-label="留言暱稱">
+          <select id="boardRole" style="background:#2a1f1a;border:1px solid rgba(196,168,130,0.25);color:var(--mocha);border-radius:8px;padding:8px 10px;font-size:0.82rem;outline:none;font-family:'Noto Sans TC',sans-serif;" aria-label="選擇身份">
+            <option value="new">新人</option>
+            <option value="pro">老手</option>
           </select>
         </div>
         <div style="display:flex;gap:8px;">
           <input type="text" id="boardMsg" placeholder="輸入留言..." maxlength="120"
             style="flex:1;background:#2a1f1a;border:1px solid rgba(196,168,130,0.25);color:var(--latte);border-radius:10px;padding:10px 14px;font-size:0.9rem;outline:none;font-family:'Noto Sans TC',sans-serif;"
-            onkeydown="if(event.key==='Enter')postMsg()">
+            onkeydown="if(event.key==='Enter')postMsg()"
+            aria-label="留言內容">
           <button onclick="postMsg()" style="background:var(--espresso);color:var(--latte);border:none;border-radius:10px;padding:10px 18px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;flex-shrink:0;">傳送</button>
         </div>
       </div>
@@ -781,183 +1305,287 @@
   </div>
 </div>
 
-<!-- ==================== 後端 API（Railway）==================== -->
-<script>
-  var API_BASE = 'https://secret-board-backend-production.up.railway.app';
-  var isAdmin = false;
-  var authToken = null;
-  var failCount = 0;
-  var lockUntil = 0;
+<!-- ==================== FIREBASE (type=module) ==================== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, query, orderBy, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  window.checkPw = function() {
-    var now = Date.now();
+  const firebaseConfig = {
+    apiKey: "AIzaSyCnKOd8xt96hkvlU2ql760EpAjn-rCC5gM",
+    authDomain: "handiwork-board.firebaseapp.com",
+    projectId: "handiwork-board",
+    storageBucket: "handiwork-board.firebasestorage.app",
+    messagingSenderId: "494966364246",
+    appId: "1:494966364246:web:19f5d02b17db8e301dc3f7"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  let isAdmin = false;
+  let sessionKey = null;
+
+  // ── Web Crypto ──
+  async function sha256(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function deriveKey(password) {
+    const salt = new TextEncoder().encode('handiwork-salt-2024');
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+      base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']
+    );
+  }
+
+  async function encryptMsg(text, key) {
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const enc = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, new TextEncoder().encode(text));
+    const combined = new Uint8Array(12 + enc.byteLength);
+    combined.set(iv, 0);
+    combined.set(new Uint8Array(enc), 12);
+    return btoa(String.fromCharCode(...combined));
+  }
+
+  async function decryptMsg(b64, key) {
+    try {
+      const combined = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+      const iv = combined.slice(0, 12);
+      const data = combined.slice(12);
+      const dec = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, data);
+      return new TextDecoder().decode(dec);
+    } catch { return null; }
+  }
+
+  // 一般用戶密碼 "handsecret" 的 SHA-256
+  const HASH_USER  = '05843ccee7ab7df54ae9dd900fd1db6169faa93defa947bd197940b1595f3d67';
+  // 管理員密碼 "adminS3cr3t!" 的 SHA-256
+  const HASH_ADMIN = '4b7debad17e16ddb7e0af081468ded7ba66b66535216bf40126cb247892d5fba';
+
+  let failCount = 0;
+  let lockUntil = 0;
+
+  window.checkPw = async function() {
+    const now = Date.now();
     if (now < lockUntil) {
-      var secs = Math.ceil((lockUntil - now) / 1000);
-      showPwErr('太多次錯誤，請等待 ' + secs + ' 秒後再試');
+      const secs = Math.ceil((lockUntil - now) / 1000);
+      document.getElementById('pwErr').textContent = `太多次錯誤，請等待 ${secs} 秒後再試`;
+      document.getElementById('pwErr').style.display = 'block';
       return;
     }
-    var pwInput = document.getElementById('hiddenPw');
-    var pw = pwInput.value.trim();
+    const pwInput = document.getElementById('hiddenPw');
+    const pw = pwInput.value;
     if (!pw) return;
-
-    var delay = Math.min(500 * failCount, 3000);
-
-    var doLogin = function() {
-      fetch(API_BASE + '/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: 'admin', password: pw })
-      })
-      .then(function(res) {
-        return res.json().then(function(data) { return { ok: res.ok, data: data }; });
-      })
-      .then(function(result) {
-        if (result.ok) {
-          onLoginSuccess(result.data);
-        } else {
-          return fetch(API_BASE + '/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: 'visitor', password: pw })
-          })
-          .then(function(res2) {
-            return res2.json().then(function(data2) { return { ok: res2.ok, data: data2 }; });
-          })
-          .then(function(result2) {
-            if (result2.ok) {
-              onLoginSuccess(result2.data);
-            } else {
-              failCount++;
-              if (failCount >= 5) {
-                lockUntil = Date.now() + 60000;
-                showPwErr('錯誤次數過多，鎖定 60 秒');
-              } else {
-                showPwErr('密碼錯誤，請重試（剩餘 ' + (5 - failCount) + ' 次）');
-              }
-              pwInput.style.borderColor = '#E07070';
-              pwInput.value = '';
-            }
-          });
-        }
-      })
-      .catch(function() {
-        showPwErr('連線失敗，請稍後再試');
-      });
-    };
-
-    if (delay > 0) {
-      setTimeout(doLogin, delay);
+    const delay = Math.min(500 * failCount, 3000);
+    if (delay > 0) await new Promise(r => setTimeout(r, delay));
+    const hash = await sha256(pw);
+    if (hash === HASH_ADMIN) {
+      isAdmin = true;
+      sessionKey = await deriveKey(pw);
+      unlockBoard();
+    } else if (hash === HASH_USER) {
+      isAdmin = false;
+      sessionKey = await deriveKey(pw);
+      unlockBoard();
     } else {
-      doLogin();
+      failCount++;
+      if (failCount >= 5) {
+        lockUntil = Date.now() + 60000;
+        document.getElementById('pwErr').textContent = '錯誤次數過多，鎖定 60 秒';
+      } else {
+        document.getElementById('pwErr').textContent = `密碼錯誤（剩餘 ${5 - failCount} 次）`;
+      }
+      document.getElementById('pwErr').style.display = 'block';
+      pwInput.style.borderColor = '#E07070';
+      pwInput.value = '';
     }
   };
 
-  function onLoginSuccess(data) {
+  function unlockBoard() {
     failCount = 0;
-    authToken = data.token;
-    isAdmin = (data.role === 'admin');
     document.getElementById('pwGate').style.display = 'none';
     document.getElementById('boardArea').style.display = 'block';
     if (isAdmin) {
-      var badge = document.getElementById('adminBadgeArea');
+      const badge = document.getElementById('adminBadgeArea');
       if (badge) badge.style.display = 'inline-flex';
     }
-    loadMessages();
+    startListening();
   }
 
-  function showPwErr(msg) {
-    var el = document.getElementById('pwErr');
-    el.textContent = msg;
-    el.style.display = 'block';
-  }
-
-  function loadMessages() {
-    var list = document.getElementById('msgList');
-    list.innerHTML = '<div style="text-align:center;color:#555;font-size:0.85rem;padding:40px 0;">載入中...</div>';
-    fetch(API_BASE + '/api/messages', {
-      headers: { 'Authorization': 'Bearer ' + authToken }
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
+  function startListening() {
+    const q = query(collection(db, "messages"), orderBy("timestamp", "asc"));
+    onSnapshot(q, async (snapshot) => {
+      const list = document.getElementById('msgList');
       list.innerHTML = '';
-      if (!data.messages || data.messages.length === 0) {
+      if (snapshot.empty) {
         list.innerHTML = '<div style="text-align:center;color:#555;font-size:0.85rem;padding:40px 0;">還沒有留言，來第一個留言吧！</div>';
         return;
       }
-      data.messages.forEach(function(msg) { renderMsg(list, msg); });
+      const items = [];
+      snapshot.forEach(docSnap => items.push({ data: docSnap.data(), id: docSnap.id }));
+      for (const item of items) {
+        await renderMsg(list, item.data, item.id);
+      }
       list.scrollTop = list.scrollHeight;
-    })
-    .catch(function() {
-      list.innerHTML = '<div style="text-align:center;color:#E07070;padding:40px 0;">連線失敗，請稍後再試</div>';
     });
   }
 
-  function renderMsg(list, msg) {
-    var emoji = isAdmin ? '👑' : '🌱';
-    var badgeClass = isAdmin ? 'badge-admin' : 'badge-new';
-    var badgeLabel = isAdmin ? '管理者' : '新人';
-    var bubbleClass = isAdmin ? 'admin' : 'user';
-    var time = new Date(msg.createdAt).toLocaleTimeString('zh-TW', {hour:'2-digit', minute:'2-digit'});
-    var deleteBtn = isAdmin
-      ? '<button onclick="window._deleteMsg(' + msg.id + ')" style="background:#8B2020;color:#FFD0D0;border:none;border-radius:6px;padding:2px 8px;font-size:0.7rem;cursor:pointer;">🗑 刪除</button>'
+  async function renderMsg(list, d, id) {
+    const roleStyles = {
+      new:   { badge: 'badge-new',   label: '新人',   emoji: '🌱', bubble: 'user'  },
+      pro:   { badge: 'badge-pro',   label: '老手',   emoji: '⭐', bubble: 'mod'   },
+      admin: { badge: 'badge-admin', label: '管理者', emoji: '👑', bubble: 'admin' },
+    };
+    const rs = roleStyles[d.role] || roleStyles['new'];
+    const time = d.timestamp?.toDate
+      ? d.timestamp.toDate().toLocaleTimeString('zh-TW', {hour:'2-digit', minute:'2-digit'})
       : '';
-    var div = document.createElement('div');
-    div.style.cssText = 'display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;';
-    div.innerHTML =
-      '<div style="flex-shrink:0;">' +
-        '<div style="background:#2a1f1a;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;">' + emoji + '</div>' +
-      '</div>' +
-      '<div style="flex:1;">' +
-        '<div style="display:flex;gap:6px;align-items:center;margin-bottom:4px;flex-wrap:wrap;">' +
-          '<span style="color:#F5DEB3;font-size:0.85rem;font-weight:600;">' + esc(msg.username) + '</span>' +
-          '<span class="badge ' + badgeClass + '">' + badgeLabel + '</span>' +
-          '<span style="color:#555;font-size:0.72rem;">' + time + '</span>' +
-          deleteBtn +
-        '</div>' +
-        '<div class="chat-bubble ' + bubbleClass + '">' + esc(msg.content) + '</div>' +
-      '</div>';
+    let plainMsg = '（無法解密）';
+    if (d.msg && sessionKey) {
+      const decrypted = await decryptMsg(d.msg, sessionKey);
+      if (decrypted !== null) plainMsg = decrypted;
+    }
+    let plainNick = '匿名';
+    if (d.nick && sessionKey) {
+      const decryptedNick = await decryptMsg(d.nick, sessionKey);
+      plainNick = decryptedNick || '匿名';
+    }
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;gap:10px;align-items:flex-start;';
+    div.innerHTML = `
+      <div style="flex-shrink:0;">
+        <div style="background:#2a1f1a;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;" aria-hidden="true">${rs.emoji}</div>
+      </div>
+      <div style="flex:1;">
+        <div style="display:flex;gap:6px;align-items:center;margin-bottom:4px;flex-wrap:wrap;">
+          <span style="color:#F5DEB3;font-size:0.85rem;font-weight:600;">${esc(plainNick)}</span>
+          <span class="badge ${rs.badge}">${rs.label}</span>
+          <span style="color:#555;font-size:0.72rem;">${time}</span>
+          ${isAdmin ? `<button onclick="window._deleteMsg('${id}')" style="background:#8B2020;color:#FFD0D0;border:none;border-radius:6px;padding:2px 8px;font-size:0.7rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;" aria-label="刪除此留言">刪除</button>` : ''}
+        </div>
+        <div class="chat-bubble ${rs.bubble}">${esc(plainMsg)}</div>
+      </div>
+    `;
     list.appendChild(div);
   }
 
-  window.postMsg = function() {
-    var msgRaw = document.getElementById('boardMsg').value.trim();
-    if (!msgRaw || !authToken) return;
-    var sendBtn = document.querySelector('#boardArea button[onclick="postMsg()"]');
+  // ── 傳送留言 ──
+  window.postMsg = async function() {
+    const nickRaw = document.getElementById('boardNick').value.trim() || '匿名';
+    const msgRaw  = document.getElementById('boardMsg').value.trim();
+    const role    = isAdmin ? 'admin' : document.getElementById('boardRole').value;
+    if (!msgRaw || !sessionKey) return;
+    const sendBtn = document.querySelector('#boardArea button[onclick="postMsg()"]');
     if (sendBtn) { sendBtn.disabled = true; sendBtn.textContent = '傳送中...'; }
-    fetch(API_BASE + '/api/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + authToken
-      },
-      body: JSON.stringify({ content: msgRaw })
-    })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (data.error) { alert(data.error); return; }
+    try {
+      const encNick = await encryptMsg(nickRaw, sessionKey);
+      const encMsg  = await encryptMsg(msgRaw, sessionKey);
+      await addDoc(collection(db, "messages"), {
+        nick: encNick, msg: encMsg, role, timestamp: serverTimestamp()
+      });
       document.getElementById('boardMsg').value = '';
-      loadMessages();
-    })
-    .catch(function() { alert('傳送失敗，請確認網路連線'); })
-    .finally(function() {
+    } catch(e) {
+      alert('傳送失敗，請確認網路連線');
+    } finally {
       if (sendBtn) { sendBtn.disabled = false; sendBtn.textContent = '傳送'; }
-    });
+    }
   };
 
-  window._deleteMsg = function(id) {
+  // ── 刪除留言（管理者）──
+  window._deleteMsg = async function(id) {
     if (!isAdmin) return;
     if (!confirm('確定要刪除這則留言嗎？')) return;
-    fetch(API_BASE + '/api/messages/' + id, {
-      method: 'DELETE',
-      headers: { 'Authorization': 'Bearer ' + authToken }
-    })
-    .then(function(r) {
-      if (!r.ok) { alert('刪除失敗'); return; }
-      loadMessages();
-    })
-    .catch(function() { alert('刪除失敗'); });
+    try {
+      await deleteDoc(doc(db, "messages", id));
+    } catch(e) {
+      alert('刪除失敗');
+    }
   };
 
+  // ── 表單送出 → Firebase 儲存 ──
+  window.submitForm = async function() {
+    const nameEl    = document.getElementById('inputName');
+    const contactEl = document.getElementById('inputContact');
+    const regionEl  = document.getElementById('inputRegion');
+    const name      = nameEl.value.trim();
+    const contact   = contactEl.value.trim();
+    const region    = regionEl.value;
+    const contactType = document.querySelector('input[name="contactType"]:checked')?.value || 'phone';
+    let valid = true;
+
+    // Validate name
+    if (!name) {
+      document.getElementById('nameErr').style.display = 'block';
+      nameEl.classList.add('error');
+      nameEl.classList.add('error-shake');
+      setTimeout(() => nameEl.classList.remove('error-shake'), 400);
+      valid = false;
+    } else {
+      document.getElementById('nameErr').style.display = 'none';
+      nameEl.classList.remove('error');
+      nameEl.classList.add('success');
+    }
+
+    // Validate contact
+    let contactValid = false;
+    if (contactType === 'phone') {
+      contactValid = /^09\d{2}[-\s]?\d{3}[-\s]?\d{3}$/.test(contact.replace(/\s/g,''));
+    } else {
+      contactValid = contact.length >= 3;
+    }
+    if (!contact || !contactValid) {
+      const msg = contactType === 'phone' ? '請輸入正確的手機號碼（09XX-XXX-XXX）' : '請輸入 LINE ID';
+      document.getElementById('contactErr').textContent = msg;
+      document.getElementById('contactErr').style.display = 'block';
+      contactEl.classList.add('error');
+      contactEl.classList.add('error-shake');
+      setTimeout(() => contactEl.classList.remove('error-shake'), 400);
+      valid = false;
+    } else {
+      document.getElementById('contactErr').style.display = 'none';
+      contactEl.classList.remove('error');
+      contactEl.classList.add('success');
+    }
+
+    // Validate region
+    if (!region) {
+      document.getElementById('regionErr').style.display = 'block';
+      regionEl.classList.add('error');
+      valid = false;
+    } else {
+      document.getElementById('regionErr').style.display = 'none';
+      regionEl.classList.remove('error');
+    }
+
+    if (!valid) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = '提交中...';
+
+    try {
+      await addDoc(collection(db, "applications"), {
+        name,
+        contact,
+        contactType,
+        region,
+        timestamp: serverTimestamp()
+      });
+      document.getElementById('formCard').style.display = 'none';
+      const s = document.getElementById('successCard');
+      s.style.display = 'block';
+      s.classList.add('success-pop');
+    } catch(e) {
+      btn.disabled = false;
+      btn.textContent = '立即免費申請名額';
+      alert('提交失敗，請稍後再試或直接加入LINE聯繫我們。');
+    }
+  };
+
+  // ── 彩蛋：開啟秘密基地 ──
   window._openHiddenPage = function() {
     document.getElementById('hiddenPage').style.display = 'block';
     document.body.style.overflow = 'hidden';
@@ -971,133 +1599,178 @@
 
   function esc(str) {
     if (!str) return '';
-    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 </script>
 
-<!-- ==================== 一般 JAVASCRIPT ==================== -->
+<!-- ==================== GENERAL JS ==================== -->
 <script>
-// ===== SCROLL FADE IN =====
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(el => {
-    if (el.isIntersecting) el.target.classList.add('visible');
+  // ── Cookie Banner ──
+  function acceptCookie() {
+    document.getElementById('cookieBanner').classList.add('hidden');
+    localStorage.setItem('cookieAccepted', '1');
+  }
+  if (localStorage.getItem('cookieAccepted')) {
+    document.getElementById('cookieBanner').classList.add('hidden');
+  }
+
+  // ── Navbar scroll ──
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+
+    const floatNav = document.getElementById('floatingNav');
+    floatNav.classList.toggle('show', window.scrollY > 500);
+  }, { passive: true });
+
+  // ── Fade-in observer ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+        observer.unobserve(el.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── Progress bar animate on load ──
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const bar = document.getElementById('quotaBar');
+      if (bar) bar.style.width = '80%';
+    }, 600);
   });
-}, { threshold: 0.12 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-// ===== FLOATING NAV =====
-window.addEventListener('scroll', () => {
-  const nav = document.getElementById('floatingNav');
-  nav.style.opacity = window.scrollY > 400 ? '1' : '0';
-  nav.style.pointerEvents = window.scrollY > 400 ? 'auto' : 'none';
-});
-
-// ===== LIVE COUNTERS =====
-function animateCounter(id, start, end, duration, prefix='', suffix='') {
-  const el = document.getElementById(id);
-  const range = end - start;
-  const startTime = performance.now();
-  function update(now) {
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    const ease = 1 - Math.pow(1 - progress, 3);
-    const val = Math.floor(start + range * ease);
-    el.textContent = prefix + val.toLocaleString('zh-TW') + suffix;
-    if (progress < 1) requestAnimationFrame(update);
+  // ── Animated counters ──
+  function animateCounter(id, start, end, duration, prefix='', suffix='') {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const range = end - start;
+    const startTime = performance.now();
+    function update(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const val = Math.floor(start + range * ease);
+      el.textContent = prefix + val.toLocaleString('zh-TW') + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
   }
-  requestAnimationFrame(update);
-}
 
-const statsObs = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting) {
-    animateCounter('c-members', 0, 532, 1800);
-    animateCounter('c-today', 0, 847, 2000);
-    animateCounter('c-paid', 0, 892450, 2200, 'NT$');
-    statsObs.disconnect();
+  const statsObs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      animateCounter('c-members', 0, 532, 1800);
+      animateCounter('c-today',   0, 4200, 2000);
+      animateCounter('c-paid',    0, 892450, 2200, 'NT$');
+      statsObs.disconnect();
+    }
+  }, { threshold: 0.3 });
+  const membersEl = document.getElementById('c-members');
+  if (membersEl) statsObs.observe(membersEl);
+
+  // ── Calculator ──
+  function calcUpdate() {
+    const qty   = parseInt(document.getElementById('qtySlider').value);
+    const price = parseInt(document.getElementById('priceSlider').value);
+    document.getElementById('qtyVal').textContent = qty;
+    document.getElementById('priceVal').textContent = price;
+    const daily = qty * price;
+    const fmt = n => 'NT$' + n.toLocaleString('zh-TW');
+    document.getElementById('r-daily').textContent = fmt(daily);
+    document.getElementById('r-week').textContent  = fmt(daily * 7);
+    document.getElementById('r-month').textContent = fmt(daily * 30);
   }
-}, { threshold: 0.3 });
-statsObs.observe(document.getElementById('c-members'));
+  document.getElementById('qtySlider').addEventListener('input', calcUpdate);
+  document.getElementById('priceSlider').addEventListener('input', calcUpdate);
 
-setInterval(() => {
-  const el = document.getElementById('c-today');
-  const cur = parseInt(el.textContent.replace(/,/g,'')) || 847;
-  el.textContent = (cur + Math.floor(Math.random()*3+1)).toLocaleString('zh-TW');
-}, 4000);
-
-// ===== CALCULATOR =====
-
-function calcUpdate() {
-  const qty   = parseInt(document.getElementById('qtySlider').value);
-  const price = parseInt(document.getElementById('priceSlider').value);
-  document.getElementById('qtyVal').textContent = qty;
-  document.getElementById('priceVal').textContent = price;
-  const daily = qty * price;
-  const fmt = n => 'NT$' + n.toLocaleString('zh-TW');
-  document.getElementById('r-daily').textContent = fmt(daily);
-  document.getElementById('r-week').textContent = fmt(daily * 7);
-  document.getElementById('r-month').textContent = fmt(daily * 30);
-}
-document.getElementById('qtySlider').addEventListener('input', calcUpdate);
-document.getElementById('priceSlider').addEventListener('input', calcUpdate);
-
-// ===== 【彩蛋 2】Konami Code：↑↑↓↓←→←→ =====
-const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight'];
-let konamiIdx = 0;
-document.addEventListener('keydown', (e) => {
-  if (e.key === KONAMI[konamiIdx]) {
-    konamiIdx++;
-    if (konamiIdx === KONAMI.length) { konamiIdx = 0; window._openHiddenPage(); }
-  } else { konamiIdx = 0; }
-});
-
-// ===== 【彩蛋 3】Footer 版權文字快速點擊 5 下 =====
-let footerClickCount = 0, footerClickTimer = null;
-const footerEl = document.querySelector('footer p');
-if (footerEl) {
-  footerEl.style.cursor = 'default';
-  footerEl.addEventListener('click', () => {
-    footerClickCount++;
-    clearTimeout(footerClickTimer);
-    footerClickTimer = setTimeout(() => { footerClickCount = 0; }, 2000);
-    if (footerClickCount >= 5) { footerClickCount = 0; window._openHiddenPage(); }
+  // ── Contact type toggle ──
+  document.querySelectorAll('input[name="contactType"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const input = document.getElementById('inputContact');
+      if (radio.value === 'phone') {
+        input.placeholder = '09XX-XXX-XXX';
+        input.setAttribute('inputmode', 'tel');
+        input.setAttribute('autocomplete', 'tel');
+      } else {
+        input.placeholder = 'LINE ID（例如：@handiwork）';
+        input.setAttribute('inputmode', 'text');
+        input.setAttribute('autocomplete', 'off');
+      }
+      input.value = '';
+      input.classList.remove('error', 'success');
+      document.getElementById('contactErr').style.display = 'none';
+    });
   });
-}
 
-// ===== INPUT LIVE VALIDATION =====
-document.getElementById('inputName').addEventListener('input', function() {
-  if (this.value.trim()) {
-    this.classList.remove('error'); this.classList.add('success');
-    document.getElementById('nameErr').style.display = 'none';
+  // ── Phone auto-format ──
+  document.getElementById('inputContact').addEventListener('input', function() {
+    const isPhone = document.getElementById('radioPhone').checked;
+    if (isPhone) {
+      let v = this.value.replace(/\D/g, '').slice(0, 10);
+      if (v.length > 4 && v.length <= 7) v = v.slice(0,4) + '-' + v.slice(4);
+      else if (v.length > 7) v = v.slice(0,4) + '-' + v.slice(4,7) + '-' + v.slice(7);
+      this.value = v;
+    }
+    if (this.value.trim()) {
+      this.classList.remove('error');
+      document.getElementById('contactErr').style.display = 'none';
+    }
+  });
+
+  // ── Name live validation ──
+  document.getElementById('inputName').addEventListener('input', function() {
+    if (this.value.trim()) {
+      this.classList.remove('error');
+      this.classList.add('success');
+      document.getElementById('nameErr').style.display = 'none';
+    }
+  });
+
+  // ── Hidden page ──
+  function closeHidden() {
+    document.getElementById('hiddenPage').style.display = 'none';
+    document.body.style.overflow = '';
   }
-});
-document.getElementById('inputContact').addEventListener('input', function() {
-  if (this.value.trim()) {
-    this.classList.remove('error'); this.classList.add('success');
-    document.getElementById('contactErr').style.display = 'none';
+  function startHiddenClock() {
+    function tick() {
+      const now = new Date();
+      const t = now.toLocaleTimeString('zh-TW', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      const el = document.getElementById('hiddenTime');
+      if (el) el.textContent = t;
+    }
+    tick();
+    setInterval(tick, 1000);
   }
-});
 
-// ===== HIDDEN PAGE =====
-function closeHidden() {
-  document.getElementById('hiddenPage').style.display = 'none';
-  document.body.style.overflow = '';
-}
+  // ── Konami Code Easter Egg ──
+  const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight'];
+  let konamiIdx = 0;
+  document.addEventListener('keydown', (e) => {
+    if (e.key === KONAMI[konamiIdx]) {
+      konamiIdx++;
+      if (konamiIdx === KONAMI.length) { konamiIdx = 0; window._openHiddenPage && window._openHiddenPage(); }
+    } else { konamiIdx = 0; }
+  });
 
-function startHiddenClock() {
-  function tick() {
-    const now = new Date();
-    const t = now.toLocaleTimeString('zh-TW', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
-    const el = document.getElementById('hiddenTime');
-    if (el) el.textContent = t;
+  // ── Footer click Easter Egg ──
+  let footerClickCount = 0, footerClickTimer = null;
+  const footerEl = document.querySelector('footer p');
+  if (footerEl) {
+    footerEl.style.cursor = 'default';
+    footerEl.addEventListener('click', () => {
+      footerClickCount++;
+      clearTimeout(footerClickTimer);
+      footerClickTimer = setTimeout(() => { footerClickCount = 0; }, 2000);
+      if (footerClickCount >= 5) { footerClickCount = 0; window._openHiddenPage && window._openHiddenPage(); }
+    });
   }
-  tick();
-  setInterval(tick, 1000);
-}
 
-// ===== FAQ =====
-document.querySelectorAll('.faq-item').forEach(item => {
-  item.addEventListener('toggle', () => {});
-});
+  // ── Trap focus in hidden page ──
+  document.getElementById('hiddenPage').addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeHidden();
+  });
 </script>
 </body>
 </html>
